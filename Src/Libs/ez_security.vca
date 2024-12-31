@@ -1,0 +1,1922 @@
+SCCTEXT Version 4.0.0.2
+PLATFORM C(8,0),UNIQUEID C(10,0),TIMESTAMP N(10,0),CLASS M(4,0),CLASSLOC M(4,0),BASECLASS M(4,0),OBJNAME M(4,0),PARENT M(4,0),PROPERTIES M(4,0),PROTECTED M(4,0),METHODS M(4,0),OBJCODE M(4,0),OLE M(4,0),OLE2 M(4,0),RESERVED1 M(4,0),RESERVED2 M(4,0),RESERVED3 M(4,0),RESERVED4 M(4,0),RESERVED5 M(4,0),RESERVED6 M(4,0),RESERVED7 M(4,0),RESERVED8 M(4,0),USER M(4,0)
+1252
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] Class     
+[START RESERVED1]
+VERSION =   3.00[END RESERVED1]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ0W7H0J
+[CLASS] form
+[BASECLASS] form
+[OBJNAME] vc_application_security
+[START PROPERTIES]
+Height = 382
+Width = 552
+DoCreate = .T.
+AutoCenter = .T.
+BorderStyle = 3
+Caption = "Application Security"
+ControlBox = .F.
+Closable = .F.
+WindowType = 1
+AlwaysOnTop = .T.
+cuser_id = ""
+cpassword = ""
+nsecurelevel = 0
+Name = "vc_application_security"
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE setpreferences
+
+
+	*--- Set form captions with passed parameters
+	LPARAMETERS tcCaption, tcAppName, tcAppVersion				&& Set security screen preferences.
+
+	THISFORM.Caption = tcCaption								&& Set form caption
+	THISFORM.cntSecurity.lblAppName.Caption = tcAppname			&& Set application name caption
+	THISFORM.cntSecurity.lblAppVersion.Caption = tcAppVersion	&& Set version caption
+	
+ENDPROC
+PROCEDURE nosecurity
+
+
+	*--- Display insufficient security message
+	=MESSAGEBOX( "You do not have permission to perform this procedure.", MB_OK+MB_ICONEXCLAMATION, "SECURITY WARNING!" )
+	RETURN	0
+
+
+ENDPROC
+PROCEDURE GotFocus
+
+	*--- Clear the user id and password when form receives the focus.
+	THISFORM.cntSecurity.txtUser_id.value = ""
+	THISFORM.cntSecurity.txtPassword.value = ""
+
+	
+ENDPROC
+[END METHODS]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+23[END RESERVED2]
+[START RESERVED3]
+cuser_id The current user id.
+cpassword The current user password.
+nsecurelevel The user security level (0-4).
+ntimeout The amount of time logged out since last use.
+ntimeon The amount of time used during last session.
+lenabled True if application security is enabled.
+*setpreferences 
+*nosecurity 
+[END RESERVED3]
+[START RESERVED6]
+Pixels[END RESERVED6]
+[START RESERVED8]
+..\include\ez_view.h[END RESERVED8]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ0WTM3O
+[CLASS] container
+[BASECLASS] container
+[OBJNAME] cntSecurity
+[PARENT] vc_application_security
+[START PROPERTIES]
+Top = 1
+Left = 1
+Width = 550
+Height = 379
+SpecialEffect = 0
+TabIndex = 1
+Name = "cntSecurity"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ0WTM3P
+[CLASS] image
+[BASECLASS] image
+[OBJNAME] imgLogo
+[PARENT] vc_application_security.cntSecurity
+[START PROPERTIES]
+Stretch = 1
+Height = 156
+Left = 1
+Top = 5
+Width = 241
+Name = "imgLogo"
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+
+	*--- Load company logo
+	IF FILE( IMG_COMPANY_LOGO )
+		THIS.Picture = IMG_COMPANY_LOGO
+	ENDIF
+	
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ0WTM3Q
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] lblAppName
+[PARENT] vc_application_security.cntSecurity
+[START PROPERTIES]
+FontItalic = .T.
+FontName = "Elephant"
+FontSize = 24
+Caption = "lblAppName"
+Height = 42
+Left = 248
+Top = 5
+Width = 298
+TabIndex = 5
+ForeColor = 64,0,128
+Name = "lblAppName"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ0WTM3Y
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] lblCopyright
+[PARENT] vc_application_security.cntSecurity
+[START PROPERTIES]
+Caption = "(c) 1997-1998 Redmer Software Company."
+Height = 16
+Left = 248
+Top = 95
+Width = 298
+TabIndex = 6
+Name = "lblCopyright"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ0WTM3Z
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] lblCopyright2
+[PARENT] vc_application_security.cntSecurity
+[START PROPERTIES]
+Caption = "All rights reserved."
+Height = 16
+Left = 248
+Top = 110
+Width = 298
+TabIndex = 7
+Name = "lblCopyright2"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ0WTM48
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] lblAppVersion
+[PARENT] vc_application_security.cntSecurity
+[START PROPERTIES]
+FontSize = 16
+Caption = "lblAppVersion"
+Height = 27
+Left = 248
+Top = 59
+Width = 298
+TabIndex = 9
+Name = "lblAppVersion"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ0WTM49
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] lblWarning1
+[PARENT] vc_application_security.cntSecurity
+[START PROPERTIES]
+Caption = "Warning:  this program is protected by copyright law and international treaties.  Unauthorized"
+Height = 19
+Left = 8
+Top = 176
+Width = 538
+TabIndex = 10
+Name = "lblWarning1"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ0WTM4A
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] lblWarning2
+[PARENT] vc_application_security.cntSecurity
+[START PROPERTIES]
+Caption = "reproduction or distribution of this program, or any portion of it, may result in severe civil and"
+Height = 19
+Left = 8
+Top = 194
+Width = 538
+TabIndex = 11
+Name = "lblWarning2"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ0WTM4I
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] lblWarning3
+[PARENT] vc_application_security.cntSecurity
+[START PROPERTIES]
+Caption = "criminal penalties, and will be prosecuted to the maximum extent possible under law."
+Height = 19
+Left = 8
+Top = 212
+Width = 538
+TabIndex = 12
+Name = "lblWarning3"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RUP0SZ30Y
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] lblSignon
+[PARENT] vc_application_security.cntSecurity
+[START PROPERTIES]
+FontSize = 16
+BackStyle = 0
+Caption = "User ID"
+Height = 23
+Left = 169
+Top = 248
+Width = 100
+TabIndex = 4
+Name = "lblSignon"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ0WTM4S
+[CLASS] line
+[BASECLASS] line
+[OBJNAME] linWhiteShadow
+[PARENT] vc_application_security.cntSecurity
+[START PROPERTIES]
+BorderStyle = 1
+BorderWidth = 2
+Height = 0
+Left = 1
+Top = 240
+Width = 546
+BorderColor = 255,255,255
+Name = "linWhiteShadow"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ0WTM4T
+[CLASS] line
+[BASECLASS] line
+[OBJNAME] linBlackVertical
+[PARENT] vc_application_security.cntSecurity
+[START PROPERTIES]
+Height = 0
+Left = 1
+Top = 239
+Width = 546
+BorderColor = 0,0,0
+Name = "linBlackVertical"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ0WTM52
+[CLASS] line
+[BASECLASS] line
+[OBJNAME] Line1
+[PARENT] vc_application_security.cntSecurity
+[START PROPERTIES]
+BorderStyle = 1
+BorderWidth = 2
+Height = 0
+Left = 1
+Top = 165
+Width = 546
+BorderColor = 255,255,255
+Name = "Line1"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ0WTM53
+[CLASS] line
+[BASECLASS] line
+[OBJNAME] Line2
+[PARENT] vc_application_security.cntSecurity
+[START PROPERTIES]
+Height = 0
+Left = 1
+Top = 164
+Width = 546
+BorderColor = 0,0,0
+Name = "Line2"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ0WTM54
+[CLASS] line
+[BASECLASS] line
+[OBJNAME] Line3
+[PARENT] vc_application_security.cntSecurity
+[START PROPERTIES]
+BorderStyle = 1
+BorderWidth = 2
+Height = 0
+Left = 248
+Top = 87
+Width = 299
+BorderColor = 255,255,255
+Name = "Line3"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ0WTM5C
+[CLASS] line
+[BASECLASS] line
+[OBJNAME] Line4
+[PARENT] vc_application_security.cntSecurity
+[START PROPERTIES]
+Height = 0
+Left = 248
+Top = 86
+Width = 299
+BorderColor = 0,0,0
+Name = "Line4"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ0WTM5D
+[CLASS] line
+[BASECLASS] line
+[OBJNAME] Line5
+[PARENT] vc_application_security.cntSecurity
+[START PROPERTIES]
+BorderStyle = 1
+BorderWidth = 2
+Height = 0
+Left = 248
+Top = 48
+Width = 299
+BorderColor = 255,255,255
+Name = "Line5"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ0WTM5E
+[CLASS] line
+[BASECLASS] line
+[OBJNAME] Line6
+[PARENT] vc_application_security.cntSecurity
+[START PROPERTIES]
+Height = 0
+Left = 248
+Top = 47
+Width = 299
+BorderColor = 0,0,0
+Name = "Line6"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ0WTM5M
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] Label4
+[PARENT] vc_application_security.cntSecurity
+[START PROPERTIES]
+FontSize = 16
+BackStyle = 0
+Caption = "Password"
+Height = 23
+Left = 168
+Top = 277
+Width = 101
+TabIndex = 8
+Name = "Label4"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RUP0SZ30Y
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] txtUser_id
+[PARENT] vc_application_security.cntSecurity
+[START PROPERTIES]
+FontSize = 12
+Format = "!!!!!!!!"
+Height = 28
+Left = 271
+MaxLength = 8
+SelectOnEntry = .T.
+TabIndex = 1
+Top = 245
+Width = 127
+Name = "txtUser_id"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ0WTM5W
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] txtPassword
+[PARENT] vc_application_security.cntSecurity
+[START PROPERTIES]
+FontSize = 12
+BorderStyle = 1
+Format = "!!!!!!!!"
+Height = 28
+Left = 271
+MaxLength = 8
+SelectOnEntry = .T.
+TabIndex = 2
+Top = 274
+Width = 127
+PasswordChar = "*"
+Name = "txtPassword"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RY21BMRI6
+[CLASS] commandgroup
+[BASECLASS] commandgroup
+[OBJNAME] cmgTransfer
+[PARENT] vc_application_security.cntSecurity
+[START PROPERTIES]
+ButtonCount = 2
+BackStyle = 0
+BorderStyle = 0
+Value = 1
+Height = 62
+Left = 176
+Top = 305
+Width = 183
+TabIndex = 3
+Name = "cmgTransfer"
+Command1.Top = 6
+Command1.Left = 5
+Command1.Height = 52
+Command1.Width = 84
+Command1.Picture = ..\graphics\rsc_formexit.ico
+Command1.Cancel = .T.
+Command1.Caption = "[Esc] E\<xit"
+Command1.TabIndex = 2
+Command1.Name = "cmdCancel"
+Command2.Top = 6
+Command2.Left = 95
+Command2.Height = 52
+Command2.Width = 84
+Command2.Picture = ..\graphics\rsc_security.ico
+Command2.Caption = "\<Login"
+Command2.TabIndex = 1
+Command2.Name = "cmdLogin"
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE cmdCancel.Click
+
+	*--- Exit the program
+	CLEAR EVENTS
+	ON ERROR
+	ON KEY
+	CLOSE ALL
+	SET LIBRARY TO
+	CLEA ALL
+	RELEASE ALL
+	SET SYSM TO DEFAULT
+	CANCEL
+
+ENDPROC
+PROCEDURE cmdLogin.Click
+
+	*--- User clicked the Login button, lookup the user information
+	
+	IF EMPTY( ALLTRIM( THISFORM.cntSecurity.txtUser_id.value ) )			&& User did not enter user id
+
+		=MESSAGEBOX( "Please enter your user id.", MB_OK + MB_ICONEXCLAMATION + MB_APPLMODAL, "Missing user id" )
+
+		THISFORM.cntSecurity.txtUser_id.SetFocus
+		RETURN 0
+	ENDIF
+	
+	*--- Look for the user id in the user table
+	IF SEEK( PADR( UPPER( THISFORM.cntSecurity.txtUser_id.value ), 8, " "), "USERS", "USER_ID" )
+
+		*--- The user id was found, check the password
+		IF UPPER(ALLTRIM(THISFORM.cntSecurity.txtPassword.value)) == UPPER(ALLTRIM(USERS.Password))
+		
+			*--- Set class properties to current user preferences
+			THISFORM.cUser_id = THISFORM.cntSecurity.txtUser_id.value
+			THISFORM.cPassword = THISFORM.cntSecurity.txtPassword.value
+			THISFORM.nSecureLevel = USERS.Security
+			
+		ELSE
+		
+			*--- The password did not match
+			=MESSAGEBOX( "Please re-enter your password.", MB_OK + MB_ICONEXCLAMATION + MB_APPLMODAL, "Password is not valid." )
+			THISFORM.cntSecurity.txtPassword.Setfocus
+			RETURN 0
+		ENDIF
+	
+	ELSE
+	
+		*--- The user id was not found in the file
+		=MESSAGEBOX( "Please re-enter your user id.", MB_OK + MB_ICONEXCLAMATION + MB_APPLMODAL, "[" + THISFORM.cntSecurity.txtUser_id.value + "] User id is not valid" )
+		THISFORM.cntSecurity.txtUser_id.Setfocus
+		RETURN 0
+	ENDIF
+	
+	THISFORM.Hide
+	
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] vc_application_security
+[START PROPERTIES]
+Arial, 0, 9, 5, 15, 12, 16, 3, 0
+Arial, 0, 12, 7, 19, 15, 21, 3, 1
+[END PROPERTIES]
+[START RESERVED1]
+  ..\include\ez_view.hÞ]î›G% ..\include\foxpro.hæ^  v ..\include\strings.hî_G¾0![END RESERVED1]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ0ZPEQE
+[CLASS] form
+[BASECLASS] form
+[OBJNAME] vc_user_selection
+[START PROPERTIES]
+Height = 475
+Width = 597
+DoCreate = .T.
+AutoCenter = .T.
+BorderStyle = 2
+Caption = "User Information"
+WindowType = 1
+AlwaysOnTop = .T.
+cmode = ""
+Name = "vc_user_selection"
+[END PROPERTIES]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+4[END RESERVED2]
+[START RESERVED3]
+cmode
+[END RESERVED3]
+[START RESERVED6]
+Pixels[END RESERVED6]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ109PYC
+[CLASS] container
+[BASECLASS] container
+[OBJNAME] cntUser
+[PARENT] vc_user_selection
+[START PROPERTIES]
+Top = 1
+Left = 1
+Width = 595
+Height = 431
+SpecialEffect = 0
+Name = "cntUser"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVL0QY4YB
+[CLASS] grid
+[BASECLASS] grid
+[OBJNAME] grdUser
+[PARENT] vc_user_selection.cntUser
+[START PROPERTIES]
+ColumnCount = -1
+AllowAddNew = .F.
+AllowHeaderSizing = .F.
+AllowRowSizing = .F.
+DeleteMark = .F.
+Height = 417
+Left = 4
+Panel = 1
+ReadOnly = .T.
+RecordSource = ""
+RecordSourceType = 1
+ScrollBars = 3
+Top = 8
+Width = 583
+Name = "grdUser"
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+
+
+	THIS.RecordSource = "USERS"
+	GOTO TOP IN USERS					&& place record pointer on first record
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ109PZQ
+[CLASS] commandgroup
+[BASECLASS] commandgroup
+[OBJNAME] cmgUser
+[PARENT] vc_user_selection
+[START PROPERTIES]
+ButtonCount = 4
+Value = 1
+Height = 40
+Left = 1
+Top = 433
+Width = 594
+Name = "cmgUser"
+Command1.Top = 6
+Command1.Left = 5
+Command1.Height = 27
+Command1.Width = 84
+Command1.Caption = "E\<xit"
+Command1.TabIndex = 1
+Command1.Name = "cmdExit"
+Command2.Top = 6
+Command2.Left = 91
+Command2.Height = 27
+Command2.Width = 84
+Command2.Caption = "\<Add"
+Command2.TabIndex = 2
+Command2.Name = "cmdAdd"
+Command3.Top = 6
+Command3.Left = 263
+Command3.Height = 27
+Command3.Width = 84
+Command3.Caption = "\<Delete"
+Command3.TabIndex = 4
+Command3.Name = "cmdDelete"
+Command4.Top = 6
+Command4.Left = 177
+Command4.Height = 27
+Command4.Width = 84
+Command4.Caption = "\<Edit"
+Command4.TabIndex = 3
+Command4.Name = "cmdEdit"
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE cmdExit.Click
+
+	*--- Exit this form.
+	THISFORM.Hide
+ENDPROC
+PROCEDURE cmdAdd.Click
+
+	*--- Add a new user record.
+	LOCAL loAdd
+	loAdd = CREATEOBJECT( "vc_User_Maintenance" )
+	loAdd.cMode = "ADD"
+	loAdd.Show(1)
+	RELEASE loAdd
+	THISFORM.Refresh
+
+ENDPROC
+PROCEDURE cmdDelete.Click
+
+	*--- Delete user
+	LOCAL lnAns
+	lnAns = MESSAGEBOX( "Delete user ["+ALLTRIM(users.user_id)+"] ?", 32+4+256, "WARNING!" )
+	IF lnAns = 6
+		DELETE IN USERS
+		THISFORM.Refresh
+	ENDIF
+ENDPROC
+PROCEDURE cmdEdit.Click
+
+	*--- Edit a user record.
+	LOCAL loAdd
+	loAdd = CREATEOBJECT( "vc_User_Maintenance" )
+	loAdd.cMode = "EDIT"
+	loAdd.Show(1)
+	RELEASE loAdd
+	THISFORM.Refresh
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] vc_user_selection
+[START PROPERTIES]
+Arial, 0, 9, 5, 15, 12, 16, 3, 0
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ1E32T9
+[CLASS] form
+[BASECLASS] form
+[OBJNAME] vc_security_level_maintenance
+[START PROPERTIES]
+Height = 258
+Width = 382
+DoCreate = .T.
+AutoCenter = .T.
+BorderStyle = 3
+Caption = "Security Level Maintenance"
+WindowType = 1
+AlwaysOnTop = .T.
+cmode = ""
+Name = "vc_security_level_maintenance"
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Activate
+
+	*--- Initialize mode-based controls
+	IF THISFORM.cMode = "ADD"
+
+		WITH THISFORM.cntSecurityLevel	
+			.txtSecurity.Enabled = .T.
+			.txtSecurity.value = 0
+			.txtDescription.value = ""
+		ENDWITH
+
+	ELSE
+	
+		*--- Form mode is set to edit record, retrieve values from table
+		WITH THISFORM.cntSecurityLevel	
+			.txtSecurity.Enabled = .F.
+			.txtSecurity.value = Secure.Security
+			.txtDescription.value = Secure.DESCRIPT
+		ENDWITH
+	
+	ENDIF
+ENDPROC
+[END METHODS]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+7[END RESERVED2]
+[START RESERVED3]
+cmode Set to "ADD" when adding users, "EDIT" when editing users.
+[END RESERVED3]
+[START RESERVED6]
+Pixels[END RESERVED6]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ1EHK3Y
+[CLASS] container
+[BASECLASS] container
+[OBJNAME] cntSecurityLevel
+[PARENT] vc_security_level_maintenance
+[START PROPERTIES]
+Top = 1
+Left = 0
+Width = 381
+Height = 216
+SpecialEffect = 0
+TabIndex = 1
+Comment = ""
+Name = "cntSecurityLevel"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ1EHK48
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] lblSecurityLevel
+[PARENT] vc_security_level_maintenance.cntSecurityLevel
+[START PROPERTIES]
+Caption = "Security Level"
+Height = 17
+Left = 9
+Top = 11
+Width = 77
+TabIndex = 7
+Name = "lblSecurityLevel"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ1EHK49
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] txtSecurity
+[PARENT] vc_security_level_maintenance.cntSecurityLevel
+[START PROPERTIES]
+Format = "!"
+Height = 23
+Left = 87
+MaxLength = 1
+TabIndex = 1
+Top = 7
+Width = 18
+Name = "txtSecurity"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ1EHK4I
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] lblDescription
+[PARENT] vc_security_level_maintenance.cntSecurityLevel
+[START PROPERTIES]
+Caption = "Description"
+Height = 17
+Left = 9
+Top = 36
+Width = 71
+TabIndex = 8
+Name = "lblDescription"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ1EHK4J
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] txtDescription
+[PARENT] vc_security_level_maintenance.cntSecurityLevel
+[START PROPERTIES]
+Format = ""
+Height = 23
+Left = 87
+MaxLength = 40
+TabIndex = 2
+Top = 32
+Width = 288
+Name = "txtDescription"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVK108HCM
+[CLASS] commandgroup
+[BASECLASS] commandgroup
+[OBJNAME] cmgSecurityLevel
+[PARENT] vc_security_level_maintenance
+[START PROPERTIES]
+ButtonCount = 2
+Value = 1
+Height = 37
+Left = 0
+Top = 219
+Width = 381
+TabIndex = 2
+Name = "cmgSecurityLevel"
+Command1.Top = 6
+Command1.Left = 5
+Command1.Height = 27
+Command1.Width = 84
+Command1.Caption = "\<Cancel"
+Command1.TabIndex = 2
+Command1.Name = "cmdCancel"
+Command2.Top = 6
+Command2.Left = 91
+Command2.Height = 27
+Command2.Width = 84
+Command2.Caption = "\<Save"
+Command2.Default = .T.
+Command2.TabIndex = 1
+Command2.Name = "cmdSave"
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE cmdCancel.Click
+
+	*--- Exit this form.
+	THISFORM.Hide
+ENDPROC
+PROCEDURE cmdSave.Click
+
+	*--- Save Securityping information
+	
+	IF EMPTY( THISFORM.cntSecurityLevel.txtSecurity.value )
+		=MESSAGEBOX( "Please enter a Security code.", 0+64+0, "Security code missing." )
+		THISFORM.cntSecurityLevel.txtSecurity.SetFocus
+		RETURN 0
+	ENDIF
+	
+	IF THISFORM.cMode = "ADD"
+	
+		** SQL:  Search for Security code already in table
+		SELECT Security ;
+			FROM Secure ;
+			WHERE (Secure.Security == THISFORM.cntSecurityLevel.txtSecurity.value) ;
+			INTO ARRAY laResult
+		** END SQL
+	
+		IF TYPE( "laResult" ) == "U"
+			APPEND BLANK IN Secure
+			REPLACE Secure.Security WITH THISFORM.cntSecurityLevel.txtSecurity.value
+		ELSE
+			=MESSAGEBOX( "Please enter a unique Security code.", 0+64+0, "Security code exists." )
+			THISFORM.cntSecurityLevel.txtSecurity.SetFocus
+			RETURN 0
+		ENDIF
+	ENDIF
+	
+	REPLACE	Secure.DESCRIPT WITH THISFORM.cntSecurityLevel.txtDescription.value
+			
+	FLUSH
+	THISFORM.Hide
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] vc_security_level_maintenance
+[START PROPERTIES]
+Arial, 0, 9, 5, 15, 12, 16, 3, 0
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ1E32T9
+[CLASS] form
+[BASECLASS] form
+[OBJNAME] vc_group_maintenance
+[START PROPERTIES]
+Height = 258
+Width = 382
+DoCreate = .T.
+AutoCenter = .T.
+BorderStyle = 3
+Caption = "Group Maintenance"
+WindowType = 1
+AlwaysOnTop = .T.
+cmode = ""
+Name = "vc_group_maintenance"
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Activate
+
+	*--- Initialize mode-based controls
+	IF THISFORM.cMode = "ADD"
+
+		WITH THISFORM.cntGroup
+			.txtGroup_id.Enabled = .T.
+			.txtGroup_id.value = ""
+			.txtDescription.value = ""
+			.cmbSecurity.value = 0
+		ENDWITH
+
+	ELSE
+	
+		*--- Form mode is set to edit record, retrieve values from table
+		WITH THISFORM.cntGroup	
+			.txtGroup_id.Enabled = .F.
+			.txtGroup_id.value = GROUPS.GROUP_ID
+			.txtDescription.value = GROUPS.DESCRIPT
+			.cmbSecurity.value = GROUPS.SECURITY
+		ENDWITH
+	
+	ENDIF
+ENDPROC
+[END METHODS]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+9[END RESERVED2]
+[START RESERVED3]
+cmode Set to "ADD" when adding users, "EDIT" when editing users.
+[END RESERVED3]
+[START RESERVED6]
+Pixels[END RESERVED6]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ1EHK3Y
+[CLASS] container
+[BASECLASS] container
+[OBJNAME] cntGroup
+[PARENT] vc_group_maintenance
+[START PROPERTIES]
+Top = 1
+Left = 0
+Width = 381
+Height = 216
+SpecialEffect = 0
+TabIndex = 1
+Comment = ""
+Name = "cntGroup"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ1EHK48
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] lblGroup
+[PARENT] vc_group_maintenance.cntGroup
+[START PROPERTIES]
+Caption = "Group id"
+Height = 17
+Left = 9
+Top = 11
+Width = 71
+TabIndex = 7
+Name = "lblGroup"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ1EHK49
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] txtGroup_id
+[PARENT] vc_group_maintenance.cntGroup
+[START PROPERTIES]
+Format = "!!!!!!!!!!"
+Height = 23
+Left = 87
+MaxLength = 10
+TabIndex = 1
+Top = 7
+Width = 67
+Name = "txtGroup_id"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ1EHK4I
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] lblDescription
+[PARENT] vc_group_maintenance.cntGroup
+[START PROPERTIES]
+Caption = "Description"
+Height = 17
+Left = 9
+Top = 36
+Width = 71
+TabIndex = 8
+Name = "lblDescription"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ1EHK4J
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] txtDescription
+[PARENT] vc_group_maintenance.cntGroup
+[START PROPERTIES]
+Format = ""
+Height = 23
+Left = 87
+MaxLength = 40
+TabIndex = 2
+Top = 32
+Width = 288
+Name = "txtDescription"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ0W7H0J
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] lblLevel
+[PARENT] vc_group_maintenance.cntGroup
+[START PROPERTIES]
+Caption = "Security Level"
+Height = 17
+Left = 9
+Top = 62
+Width = 78
+TabIndex = 9
+Name = "lblLevel"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVP0VNQ2Y
+[CLASS] combobox
+[BASECLASS] combobox
+[OBJNAME] cmbSecurity
+[PARENT] vc_group_maintenance.cntGroup
+[START PROPERTIES]
+ColumnCount = 2
+RowSourceType = 2
+RowSource = "SECURE"
+Height = 25
+Left = 87
+Style = 2
+Top = 57
+Width = 288
+BoundTo = .T.
+Name = "cmbSecurity"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVK108HCM
+[CLASS] commandgroup
+[BASECLASS] commandgroup
+[OBJNAME] cmgGroup
+[PARENT] vc_group_maintenance
+[START PROPERTIES]
+ButtonCount = 2
+Value = 1
+Height = 37
+Left = 0
+Top = 219
+Width = 381
+TabIndex = 2
+Name = "cmgGroup"
+Command1.Top = 6
+Command1.Left = 5
+Command1.Height = 27
+Command1.Width = 84
+Command1.Caption = "\<Cancel"
+Command1.TabIndex = 2
+Command1.Name = "cmdCancel"
+Command2.Top = 6
+Command2.Left = 91
+Command2.Height = 27
+Command2.Width = 84
+Command2.Caption = "\<Save"
+Command2.Default = .T.
+Command2.TabIndex = 1
+Command2.Name = "cmdSave"
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE cmdCancel.Click
+
+	*--- Exit this form.
+	THISFORM.Hide
+ENDPROC
+PROCEDURE cmdSave.Click
+
+	*--- Save information
+	
+	IF EMPTY( THISFORM.cntGroup.txtGroup_id.value )
+		=MESSAGEBOX( "Please enter a Group id.", 0+64+0, "Group id is missing." )
+		THISFORM.cntGroup.txtGroup_id.SetFocus
+		RETURN 0
+	ENDIF
+	
+	IF THISFORM.cMode = "ADD"
+	
+		** SQL:  Search for Group code already in table
+		SELECT GROUP_ID ;
+			FROM GROUPS ;
+			WHERE (Groups.Group_id == THISFORM.cntGroup.txtGroup_id.value) ;
+			INTO ARRAY laResult
+		** END SQL
+	
+		IF TYPE( "laResult" ) == "U"
+			APPEND BLANK IN GROUPS
+			REPLACE Groups.Group_id WITH THISFORM.cntGroup.txtGroup_id.value
+		ELSE
+			=MESSAGEBOX( "Please enter a unique Group id.", 0+64+0, "Group exists." )
+			THISFORM.cntGroup.txtGroup_id.SetFocus
+			RETURN 0
+		ENDIF
+	ENDIF
+	
+	REPLACE	Groups.DESCRIPT	 WITH THISFORM.cntGroup.txtDescription.value,;
+			Groups.SECURITY	 WITH THISFORM.cntGroup.cmbSecurity.value
+			
+	FLUSH
+	THISFORM.Hide
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] vc_group_maintenance
+[START PROPERTIES]
+Arial, 0, 9, 5, 15, 12, 16, 3, 0
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ1E32T9
+[CLASS] form
+[BASECLASS] form
+[OBJNAME] vc_user_maintenance
+[START PROPERTIES]
+Height = 258
+Width = 382
+DoCreate = .T.
+AutoCenter = .T.
+BorderStyle = 2
+Caption = "User Maintenance"
+WindowType = 1
+AlwaysOnTop = .T.
+cmode = ""
+Name = "vc_user_maintenance"
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Activate
+
+	*--- Initialize mode-based controls
+	IF THISFORM.cMode = "ADD"
+
+		WITH THISFORM.cntUser
+			.txtUser_id.Enabled = .T.
+			.txtUser_id.Value = ""
+			.txtPassword.Value = ""
+			.txtFirstName.Value = ""
+			.txtLastName.Value = ""
+			.txtDepartment.Value = ""
+			.txtSecurityLevel.Value = 0
+		ENDWITH
+		
+	ELSE
+	
+		*--- Form mode is set to edit record, retrieve values from table
+		WITH THISFORM.cntUser
+			.txtUser_id.Enabled = .F.
+			.txtUser_id.Value = users.user_id
+			.txtPassword.Value = users.password
+			.txtFirstName.Value = users.first_name
+			.txtLastName.Value = users.last_name
+			.txtDepartment.Value = users.department
+			.txtSecurityLevel.Value = users.security
+		ENDWITH
+	
+	ENDIF
+ENDPROC
+[END METHODS]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+15[END RESERVED2]
+[START RESERVED3]
+cmode Set to "ADD" when adding users, "EDIT" when editing users.
+[END RESERVED3]
+[START RESERVED6]
+Pixels[END RESERVED6]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ1EHK3Y
+[CLASS] container
+[BASECLASS] container
+[OBJNAME] cntUser
+[PARENT] vc_user_maintenance
+[START PROPERTIES]
+Top = 1
+Left = 0
+Width = 381
+Height = 216
+SpecialEffect = 0
+TabIndex = 1
+Name = "cntUser"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ1EHK48
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] lblUser_id
+[PARENT] vc_user_maintenance.cntUser
+[START PROPERTIES]
+Caption = "User id"
+Height = 17
+Left = 9
+Top = 11
+Width = 71
+TabIndex = 7
+Name = "lblUser_id"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ1EHK49
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] txtUser_id
+[PARENT] vc_user_maintenance.cntUser
+[START PROPERTIES]
+Format = "!!!!!!!!"
+Height = 23
+Left = 87
+MaxLength = 8
+TabIndex = 1
+Top = 7
+Width = 67
+Name = "txtUser_id"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ1EHK4I
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] lblPassword
+[PARENT] vc_user_maintenance.cntUser
+[START PROPERTIES]
+Caption = "Password"
+Height = 17
+Left = 9
+Top = 36
+Width = 71
+TabIndex = 8
+Name = "lblPassword"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ1EHK4J
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] txtPassword
+[PARENT] vc_user_maintenance.cntUser
+[START PROPERTIES]
+Format = "!!!!!!!!"
+Height = 23
+Left = 87
+MaxLength = 8
+TabIndex = 2
+Top = 32
+Width = 67
+Name = "txtPassword"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ1EHK4S
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] lblFirstName
+[PARENT] vc_user_maintenance.cntUser
+[START PROPERTIES]
+Caption = "First Name"
+Height = 17
+Left = 9
+Top = 62
+Width = 71
+TabIndex = 9
+Name = "lblFirstName"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ1EHK4T
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] txtFirstName
+[PARENT] vc_user_maintenance.cntUser
+[START PROPERTIES]
+Format = ""
+Height = 23
+Left = 87
+MaxLength = 12
+TabIndex = 3
+Top = 58
+Width = 150
+Name = "txtFirstName"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ0W7H0J
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] lblLastName
+[PARENT] vc_user_maintenance.cntUser
+[START PROPERTIES]
+Caption = "Last Name"
+Height = 17
+Left = 9
+Top = 87
+Width = 71
+TabIndex = 10
+Name = "lblLastName"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ0WTM3O
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] txtLastName
+[PARENT] vc_user_maintenance.cntUser
+[START PROPERTIES]
+Format = ""
+Height = 23
+Left = 87
+MaxLength = 15
+TabIndex = 4
+Top = 83
+Width = 150
+Name = "txtLastName"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ1EHK52
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] lblSecurityLevel
+[PARENT] vc_user_maintenance.cntUser
+[START PROPERTIES]
+Caption = "Security Level"
+Comment = ""
+Height = 17
+Left = 8
+Top = 137
+Width = 78
+TabIndex = 12
+Name = "lblSecurityLevel"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ1EHK5D
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] txtSecurityLevel
+[PARENT] vc_user_maintenance.cntUser
+[START PROPERTIES]
+Format = "9"
+Height = 23
+Left = 86
+MaxLength = 1
+TabIndex = 6
+Top = 133
+Width = 24
+Comment = ""
+Name = "txtSecurityLevel"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ1EHK5E
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] lblDepartment
+[PARENT] vc_user_maintenance.cntUser
+[START PROPERTIES]
+Caption = "Department"
+Height = 17
+Left = 8
+Top = 112
+Width = 71
+TabIndex = 11
+Name = "lblDepartment"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ1EHK5N
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] txtDepartment
+[PARENT] vc_user_maintenance.cntUser
+[START PROPERTIES]
+Format = ""
+Height = 23
+Left = 86
+MaxLength = 15
+TabIndex = 5
+Top = 108
+Width = 150
+Name = "txtDepartment"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ1EHK5O
+[CLASS] commandgroup
+[BASECLASS] commandgroup
+[OBJNAME] cmgUser
+[PARENT] vc_user_maintenance
+[START PROPERTIES]
+ButtonCount = 2
+Value = 1
+Height = 37
+Left = 0
+Top = 219
+Width = 381
+TabIndex = 2
+Name = "cmgUser"
+Command1.Top = 6
+Command1.Left = 5
+Command1.Height = 27
+Command1.Width = 84
+Command1.Caption = "\<Cancel"
+Command1.Name = "cmdCancel"
+Command2.Top = 6
+Command2.Left = 91
+Command2.Height = 27
+Command2.Width = 84
+Command2.Caption = "\<Save"
+Command2.Default = .T.
+Command2.Name = "cmdSave"
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE cmdCancel.Click
+
+	*--- Exit this form.
+	THISFORM.Hide
+ENDPROC
+PROCEDURE cmdSave.Click
+
+	*--- Save user information
+
+	IF EMPTY( THISFORM.cntUser.txtUser_id.value )
+		=MESSAGEBOX( "Please enter a user id.", 0+64+0, "User id missing." )
+		THISFORM.cntUser.txtUser_id.SetFocus
+		RETURN 0
+	ENDIF
+	
+	IF THISFORM.cMode = "ADD"
+
+		** SQL:  Search for user already in table
+		SELECT USER_ID ;
+			FROM USERS ;
+			WHERE (USERS.USER_ID == THISFORM.cntUser.txtUser_id.value) ;
+			INTO ARRAY laResult
+		** END SQL
+
+		IF TYPE( "laResult" ) == "U"
+			APPEND BLANK IN USERS
+			REPLACE users.user_id WITH THISFORM.cntUser.txtUser_id.value
+		ELSE
+			=MESSAGEBOX( "Please enter a unique user id.", 0+64+0, "User exists." )
+			THISFORM.cntUser.txtUser_id.SetFocus
+			RETURN 0
+		ENDIF
+
+	ENDIF
+	
+	REPLACE	users.password   WITH THISFORM.cntUser.txtPassword.value,;
+			users.first_name WITH THISFORM.cntUser.txtFirstName.value,;
+			users.last_name  WITH THISFORM.cntUser.txtLastName.value,;
+			users.department WITH THISFORM.cntUser.txtDepartment.value,;
+			users.security   WITH THISFORM.cntUser.txtSecurityLevel.value
+	FLUSH
+	THISFORM.Hide
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] vc_user_maintenance
+[START PROPERTIES]
+Arial, 0, 9, 5, 15, 12, 16, 3, 0
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVK108HCM
+[CLASS] form
+[BASECLASS] form
+[OBJNAME] vc_security_level_selection
+[START PROPERTIES]
+Height = 237
+Width = 502
+DoCreate = .T.
+AutoCenter = .T.
+BorderStyle = 3
+Caption = "Security Level Selection"
+WindowType = 1
+AlwaysOnTop = .T.
+Name = "vc_security_level_selection"
+[END PROPERTIES]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+4[END RESERVED2]
+[START RESERVED6]
+Pixels[END RESERVED6]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVK10HG2G
+[CLASS] container
+[BASECLASS] container
+[OBJNAME] cntSecurityLevel
+[PARENT] vc_security_level_selection
+[START PROPERTIES]
+Top = 1
+Left = 2
+Width = 499
+Height = 191
+SpecialEffect = 0
+Name = "cntSecurityLevel"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVK10HG2H
+[CLASS] grid
+[BASECLASS] grid
+[OBJNAME] grdSecurityLevel
+[PARENT] vc_security_level_selection.cntSecurityLevel
+[START PROPERTIES]
+AllowHeaderSizing = .F.
+AllowRowSizing = .F.
+DeleteMark = .F.
+Height = 180
+Left = 5
+ReadOnly = .T.
+RecordSource = ""
+Top = 5
+Width = 489
+Name = "grdSecurityLevel"
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+
+	*--- Set GRID properties programatically.
+	THIS.RecordSource = "SECURE"
+	GOTO TOP IN SECURE
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVK10HG2Q
+[CLASS] commandgroup
+[BASECLASS] commandgroup
+[OBJNAME] cmgSecuritySelection
+[PARENT] vc_security_level_selection
+[START PROPERTIES]
+ButtonCount = 4
+Value = 1
+Height = 40
+Left = 1
+Top = 193
+Width = 499
+Name = "cmgSecuritySelection"
+Command1.Top = 6
+Command1.Left = 5
+Command1.Height = 27
+Command1.Width = 84
+Command1.Caption = "E\<xit"
+Command1.TabIndex = 1
+Command1.Name = "cmdExit"
+Command2.Top = 6
+Command2.Left = 91
+Command2.Height = 27
+Command2.Width = 84
+Command2.Caption = "\<Add"
+Command2.TabIndex = 2
+Command2.Name = "cmdAdd"
+Command3.Top = 6
+Command3.Left = 263
+Command3.Height = 27
+Command3.Width = 84
+Command3.Caption = "\<Delete"
+Command3.TabIndex = 4
+Command3.Name = "cmdDelete"
+Command4.Top = 6
+Command4.Left = 177
+Command4.Height = 27
+Command4.Width = 84
+Command4.Caption = "\<Edit"
+Command4.TabIndex = 3
+Command4.Name = "cmdEdit"
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE cmdExit.Click
+
+	*--- Exit this form.
+	THISFORM.Hide
+ENDPROC
+PROCEDURE cmdAdd.Click
+
+	*--- Add a new user record.
+	LOCAL loAdd
+	loAdd = CREATEOBJECT( "vc_Security_Level_Maintenance" )
+	loAdd.cMode = "ADD"
+	loAdd.Show(1)
+	RELEASE loAdd
+	THISFORM.Refresh
+
+ENDPROC
+PROCEDURE cmdDelete.Click
+
+	*--- Delete user
+	LOCAL lnAns
+	lnAns = MESSAGEBOX( "Delete security level ["+ALLTRIM(  STR(SECURE.SECURITY) )+"] ?", 32+4+256, "WARNING!" )
+	IF lnAns = 6
+		DELETE IN SECURE
+		THISFORM.Refresh
+	ENDIF
+ENDPROC
+PROCEDURE cmdEdit.Click
+
+	*--- Edit a user record.
+	LOCAL loAdd
+	loAdd = CREATEOBJECT( "vc_Security_Level_Maintenance" )
+	loAdd.cMode = "EDIT"
+	loAdd.Show(1)
+	RELEASE loAdd
+	THISFORM.Refresh
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] vc_security_level_selection
+[START PROPERTIES]
+Arial, 0, 9, 5, 15, 12, 16, 3, 0
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVK108HCM
+[CLASS] form
+[BASECLASS] form
+[OBJNAME] vc_group_selection
+[START PROPERTIES]
+Height = 439
+Width = 677
+DoCreate = .T.
+AutoCenter = .T.
+BorderStyle = 2
+Caption = "Security Group Selection"
+WindowType = 1
+AlwaysOnTop = .T.
+Name = "vc_group_selection"
+[END PROPERTIES]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+4[END RESERVED2]
+[START RESERVED6]
+Pixels[END RESERVED6]
+[START RESERVED7]
+vc_group_selection[END RESERVED7]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVK10HG2G
+[CLASS] container
+[BASECLASS] container
+[OBJNAME] cntGroupSelection
+[PARENT] vc_group_selection
+[START PROPERTIES]
+Top = 1
+Left = 1
+Width = 673
+Height = 396
+SpecialEffect = 0
+Name = "cntGroupSelection"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVK10HG2H
+[CLASS] grid
+[BASECLASS] grid
+[OBJNAME] grdGroupSelection
+[PARENT] vc_group_selection.cntGroupSelection
+[START PROPERTIES]
+AllowHeaderSizing = .F.
+AllowRowSizing = .F.
+DeleteMark = .F.
+Height = 385
+Left = 5
+ReadOnly = .T.
+RecordSource = ""
+Top = 5
+Width = 663
+Name = "grdGroupSelection"
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+
+	*--- Set GRID properties programatically.
+	THIS.RecordSource = "GROUPS"
+	GOTO TOP IN GROUPS
+	
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVK10HG2Q
+[CLASS] commandgroup
+[BASECLASS] commandgroup
+[OBJNAME] cmgGroupSelection
+[PARENT] vc_group_selection
+[START PROPERTIES]
+ButtonCount = 4
+Value = 1
+Height = 40
+Left = 1
+Top = 398
+Width = 674
+Name = "cmgGroupSelection"
+Command1.Top = 6
+Command1.Left = 5
+Command1.Height = 27
+Command1.Width = 84
+Command1.Caption = "E\<xit"
+Command1.TabIndex = 1
+Command1.Name = "cmdExit"
+Command2.Top = 6
+Command2.Left = 91
+Command2.Height = 27
+Command2.Width = 84
+Command2.Caption = "\<Add"
+Command2.TabIndex = 2
+Command2.Name = "cmdAdd"
+Command3.Top = 6
+Command3.Left = 263
+Command3.Height = 27
+Command3.Width = 84
+Command3.Caption = "\<Delete"
+Command3.TabIndex = 4
+Command3.Name = "cmdDelete"
+Command4.Top = 6
+Command4.Left = 177
+Command4.Height = 27
+Command4.Width = 84
+Command4.Caption = "\<Edit"
+Command4.TabIndex = 3
+Command4.Name = "cmdEdit"
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE cmdExit.Click
+
+	*--- Exit this form.
+	THISFORM.Hide
+ENDPROC
+PROCEDURE cmdAdd.Click
+
+	*--- Add a new user record.
+	LOCAL loAdd
+	loAdd = CREATEOBJECT( "vc_Group_Maintenance" )
+	loAdd.cMode = "ADD"
+	loAdd.Show(1)
+	RELEASE loAdd
+	THISFORM.Refresh
+
+ENDPROC
+PROCEDURE cmdDelete.Click
+
+	*--- Delete user
+	LOCAL lnAns
+	lnAns = MESSAGEBOX( "Delete group ["+ALLTRIM( GROUPS.GROUP_ID )+"] ?", 32+4+256, "WARNING!" )
+	IF lnAns = 6
+		DELETE IN GROUPS
+		THISFORM.Refresh
+	ENDIF
+ENDPROC
+PROCEDURE cmdEdit.Click
+
+	*--- Edit a user record.
+	LOCAL loAdd
+	loAdd = CREATEOBJECT( "vc_Group_Maintenance" )
+	loAdd.cMode = "EDIT"
+	loAdd.Show(1)
+	RELEASE loAdd
+	THISFORM.Refresh
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] vc_group_selection
+[START PROPERTIES]
+Arial, 0, 9, 5, 15, 12, 16, 3, 0
+[END PROPERTIES]
+[EOF]

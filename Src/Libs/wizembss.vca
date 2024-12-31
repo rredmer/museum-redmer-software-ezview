@@ -1,0 +1,353 @@
+SCCTEXT Version 4.0.0.2
+PLATFORM C(8,0),UNIQUEID C(10,0),TIMESTAMP N(10,0),CLASS M(4,0),CLASSLOC M(4,0),BASECLASS M(4,0),OBJNAME M(4,0),PARENT M(4,0),PROPERTIES M(4,0),PROTECTED M(4,0),METHODS M(4,0),OBJCODE M(4,0),OLE M(4,0),OLE2 M(4,0),RESERVED1 M(4,0),RESERVED2 M(4,0),RESERVED3 M(4,0),RESERVED4 M(4,0),RESERVED5 M(4,0),RESERVED6 M(4,0),RESERVED7 M(4,0),RESERVED8 M(4,0),USER M(4,0)
+1252
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] Class     
+[START RESERVED1]
+VERSION =   3.00[END RESERVED1]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _QZD0WJEDS
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] embossedfield
+[START PROPERTIES]
+FontBold = .F.
+FontName = "Arial"
+FontSize = 8
+Height = 22
+Width = 113
+ColorSource = 0
+DisabledBackColor = 255,255,255
+Name = "embossedfield"
+[END PROPERTIES]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+1[END RESERVED2]
+[START RESERVED4]
+stylebmp\txtbox3.bmp[END RESERVED4]
+[START RESERVED5]
+stylebmp\txtbox3.bmp[END RESERVED5]
+[START RESERVED6]
+Pixels[END RESERVED6]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] embossedfield
+[START PROPERTIES]
+Arial, 0, 8, 5, 14, 11, 12, 3, 0
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _QZD0WJKMY
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] embossedlabel
+[START PROPERTIES]
+FontBold = .F.
+FontName = "Arial"
+FontSize = 8
+BackStyle = 0
+Caption = "Label1"
+Height = 13
+Width = 43
+Name = "embossedlabel"
+[END PROPERTIES]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+1[END RESERVED2]
+[START RESERVED4]
+stylebmp\label3.bmp[END RESERVED4]
+[START RESERVED5]
+stylebmp\label3.bmp[END RESERVED5]
+[START RESERVED6]
+Pixels[END RESERVED6]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] embossedlabel
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _QZD0WJP41
+[CLASS] checkbox
+[BASECLASS] checkbox
+[OBJNAME] embossedlogic
+[START PROPERTIES]
+Height = 15
+Width = 72
+FontBold = .F.
+FontName = "Arial"
+FontSize = 8
+BackStyle = 0
+Caption = "Check1"
+ColorSource = 0
+DisabledBackColor = 255,255,255
+Name = "embossedlogic"
+[END PROPERTIES]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+1[END RESERVED2]
+[START RESERVED4]
+stylebmp\logic3.bmp[END RESERVED4]
+[START RESERVED5]
+stylebmp\logic3.bmp[END RESERVED5]
+[START RESERVED6]
+Pixels[END RESERVED6]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] embossedlogic
+[START PROPERTIES]
+Arial, 0, 8, 5, 14, 11, 12, 3, 0
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _QZD0WJTKM
+[CLASS] editbox
+[BASECLASS] editbox
+[OBJNAME] embossedmemo
+[START PROPERTIES]
+FontBold = .F.
+FontName = "Arial"
+FontSize = 8
+Alignment = 0
+Height = 50
+Width = 150
+ColorSource = 0
+Name = "embossedmemo"
+[END PROPERTIES]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+1[END RESERVED2]
+[START RESERVED4]
+stylebmp\memo3.bmp[END RESERVED4]
+[START RESERVED5]
+stylebmp\memo3.bmp[END RESERVED5]
+[START RESERVED6]
+Pixels[END RESERVED6]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] embossedmemo
+[START PROPERTIES]
+Arial, 0, 8, 5, 14, 11, 12, 3, 0
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _QZD0WJYFN
+[CLASS] oleboundcontrol
+[BASECLASS] oleboundcontrol
+[OBJNAME] embossedole
+[START PROPERTIES]
+Height = 100
+Width = 150
+Visible = .T.
+Sizable = .T.
+Name = "embossedole"
+[END PROPERTIES]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+1[END RESERVED2]
+[START RESERVED4]
+stylebmp\ole3.bmp[END RESERVED4]
+[START RESERVED5]
+stylebmp\ole3.bmp[END RESERVED5]
+[START RESERVED6]
+Pixels[END RESERVED6]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] FONTINFO  
+[OBJNAME] embossedole
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _QZD0WMAUN
+[CLASS] baseform
+[CLASSLOC] wizbase.vcx
+[BASECLASS] form
+[OBJNAME] embossedform
+[START PROPERTIES]
+ScaleMode = 3
+DoCreate = .T.
+wizlayout = layoutsty
+wizfield = embossedfield
+wizmemo = embossedmemo
+wizlogic = embossedlogic
+wizole = embossedole
+wizmaxcharfld = 45
+wizlblsuffix = (":")
+wizlblcap = proper
+wizformstretch = .T.
+wizlbldefwid = .T.
+wiztitle = Label1
+wizuser = 0
+wizgrid = grid1
+wizverify = .T.
+wizbtnpos = 0
+wizcodestyle = .T.
+wizcboxlbl = .T.
+wizlabel = embossedlabel
+Name = "embossedform"
+[END PROPERTIES]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+7[END RESERVED2]
+[START RESERVED4]
+stylebmp\form3.bmp[END RESERVED4]
+[START RESERVED5]
+stylebmp\form3.bmp[END RESERVED5]
+[START RESERVED6]
+Pixels[END RESERVED6]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _QZD0WMAAY
+[CLASS] layoutsty
+[CLASSLOC] wizbase.vcx
+[BASECLASS] container
+[OBJNAME] Layoutsty
+[PARENT] embossedform
+[START PROPERTIES]
+Top = 54
+Left = 4
+Width = 571
+Height = 205
+TabIndex = 0
+Name = "Layoutsty"
+shape1.Top = 0
+shape1.Left = 0
+shape1.Height = 205
+shape1.Width = 570
+shape1.Name = "shape1"
+shape2.Top = 7
+shape2.Left = 6
+shape2.Height = 13
+shape2.Width = 37
+shape2.Name = "shape2"
+shape3.Top = 22
+shape3.Left = 6
+shape3.Height = 13
+shape3.Width = 37
+shape3.Name = "shape3"
+shape4.Top = 7
+shape4.Left = 260
+shape4.Height = 13
+shape4.Width = 37
+shape4.Name = "shape4"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _QZD0WMAHE
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] Label1
+[PARENT] embossedform
+[START PROPERTIES]
+AutoSize = .T.
+FontBold = .T.
+FontName = "Times New Roman"
+FontSize = 20
+BackStyle = 0
+Caption = "Label1"
+Height = 34
+Left = 12
+Top = 8
+Width = 83
+Name = "Label1"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _QZD0WMAKP
+[CLASS] shape
+[BASECLASS] shape
+[OBJNAME] Shape1
+[PARENT] embossedform
+[START PROPERTIES]
+Top = 42
+Left = 5
+Height = 1
+Width = 568
+BackColor = 128,128,128
+BorderColor = 128,128,128
+Name = "Shape1"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _QZD0WMAML
+[CLASS] shape
+[BASECLASS] shape
+[OBJNAME] Shape2
+[PARENT] embossedform
+[START PROPERTIES]
+Top = 43
+Left = 5
+Height = 1
+Width = 568
+BackColor = 255,255,255
+BorderColor = 255,255,255
+Name = "Shape2"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _QZD0WMAP8
+[CLASS] shape
+[BASECLASS] shape
+[OBJNAME] Shape3
+[PARENT] embossedform
+[START PROPERTIES]
+Top = 264
+Left = 6
+Height = 1
+Width = 568
+BackColor = 128,128,128
+BorderColor = 128,128,128
+Name = "Shape3"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _QZD0WMARN
+[CLASS] shape
+[BASECLASS] shape
+[OBJNAME] Shape4
+[PARENT] embossedform
+[START PROPERTIES]
+Top = 265
+Left = 6
+Height = 1
+Width = 568
+BackColor = 255,255,255
+BorderColor = 255,255,255
+Name = "Shape4"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] embossedform
+[START PROPERTIES]
+Arial, 0, 9, 5, 15, 12, 13, 3, 0
+[END PROPERTIES]
+[EOF]

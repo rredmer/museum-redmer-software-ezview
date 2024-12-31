@@ -1,0 +1,654 @@
+SCCTEXT Version 4.0.0.2
+PLATFORM C(8,0),UNIQUEID C(10,0),TIMESTAMP N(10,0),CLASS M(4,0),CLASSLOC M(4,0),BASECLASS M(4,0),OBJNAME M(4,0),PARENT M(4,0),PROPERTIES M(4,0),PROTECTED M(4,0),METHODS M(4,0),OBJCODE M(4,0),OLE M(4,0),OLE2 M(4,0),RESERVED1 M(4,0),RESERVED2 M(4,0),RESERVED3 M(4,0),RESERVED4 M(4,0),RESERVED5 M(4,0),RESERVED6 M(4,0),RESERVED7 M(4,0),RESERVED8 M(4,0),USER M(4,0)
+1252
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] Class     
+[START RESERVED1]
+VERSION =   3.00[END RESERVED1]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RUR0P68XF
+[CLASS] form
+[BASECLASS] form
+[OBJNAME] vc_splash_screen
+[START PROPERTIES]
+Height = 359
+Width = 551
+ShowWindow = 1
+DoCreate = .T.
+AutoCenter = .T.
+BorderStyle = 0
+Caption = ""
+ControlBox = .F.
+Closable = .F.
+ClipControls = .F.
+WindowType = 1
+AlwaysOnTop = .T.
+Name = "vc_splash_screen"
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE setpreferences
+
+PARAMETERS tcCaption, tcAppName, tcAppVersion			&& Set splash screen preferences.
+
+	THISFORM.Caption = tcCaption
+	THISFORM.cntSplash.lblAppName.Caption = tcAppname
+	THISFORM.cntSplash.lblAppVersion.Caption = tcAppVersion
+	
+ENDPROC
+PROCEDURE Activate
+
+
+	*--- Configure form mode based on property
+	IF (THISFORM.WindowType == 0)					&& If the form is non-modal, we don't need buttons
+		THISFORM.cntSplash.cmdOK.Enabled = .F.		&& This mode is used for startup - splash
+		THISFORM.cntSplash.cmdOK.Visible = .F.
+		THISFORM.cntSplash.cmdSysInfo.Enabled = .F.
+		THISFORM.cntSplash.cmdSysInfo.Visible = .F.
+	ELSE											&& Else the form mode is modal
+		THISFORM.cntSplash.cmdOK.Enabled = .T.		&& We need the OK button to get out of the form.
+		THISFORM.cntSplash.cmdOK.Visible = .T.
+		THISFORM.cntSplash.cmdSysInfo.Enabled = .T.
+		THISFORM.cntSplash.cmdSysInfo.Visible = .T.
+	ENDIF
+	
+	
+ENDPROC
+PROCEDURE Init
+
+	*-- Constants used to read the system registry
+	#DEFINE HKEY_LOCAL_MACHINE  		-2147483646  
+	#DEFINE KEY_SHARED_TOOLS_LOCATION 	"Software\Microsoft\Shared Tools Location"
+	#DEFINE KEY_NTCURRENTVERSION 		"Software\Microsoft\Windows NT\CurrentVersion"
+	#DEFINE KEY_WIN4CURRENTVERSION 		"Software\Microsoft\Windows\CurrentVersion"
+	#DEFINE KEY_QUERY_VALUE 			1
+	#DEFINE ERROR_SUCCESS				0	&& OK
+
+	*-- DECLARE DLL statements for reading/writing to private INI files
+	DECLARE INTEGER GetPrivateProfileString IN Win32API  AS GetPrivStr ;
+		String cSection, String cKey, String cDefault, String @cBuffer, ;
+		Integer nBufferSize, String cINIFile
+
+	DECLARE INTEGER WritePrivateProfileString IN Win32API AS WritePrivStr ;
+		String cSection, String cKey, String cValue, String cINIFile
+
+	*-- DECLARE DLL statement for Windows 3.1 API function GetProfileString
+	DECLARE INTEGER GetProfileString IN Win32API AS GetProStr ;
+	  String cSection, String cKey, String cDefault, ;
+	  String @cBuffer, Integer nBufferSize
+
+	*-- DECLARE DLL statements for reading/writing to system registry
+	DECLARE Integer RegOpenKeyEx IN Win32API ;
+	  Integer nKey, String @cSubKey, Integer nReserved,;
+	  Integer nAccessMask, Integer @nResult
+	
+	DECLARE Integer RegQueryValueEx IN Win32API ;
+	  Integer nKey, String cValueName, Integer nReserved,;
+	  Integer @nType, String @cBuffer, Integer @nBufferSize
+	
+	DECLARE Integer RegCloseKey IN Win32API ;
+	  Integer nKey
+
+
+
+	LOCAL lcBuffer, ;
+		  lnBufferSize, ;
+		  lcRetVal, ;
+		  lnReserved, ;
+		  lnResult, ;
+		  lnError, ;
+		  lnType, ;
+		  lcKey
+
+	STORE 0 TO lnReserved, lnResult, lnType
+	lcBuffer = SPACE(128)
+	lnBufferSize = LEN(lcBuffer)
+
+	STORE "" TO ;
+		THISFORM.cntSplash.lblUserName.Caption, ;
+		THISFORM.cntSplash.lblUserCorp.Caption, ;
+		THISFORM.cMSInfoDir
+
+	DO CASE
+		CASE UPPER(OS()) = "WINDOWS NT" OR UPPER(OS()) = "WINDOWS 4"
+			*-- Gets default user name, organization, and location of MSINFO.EXE from 
+			*-- system registry
+			lnError = RegOpenKeyEx(HKEY_LOCAL_MACHINE, KEY_SHARED_TOOLS_LOCATION, lnReserved, KEY_QUERY_VALUE, @lnResult)
+			IF lnError = ERROR_SUCCESS
+				lnError = RegQueryValueEx(lnResult, "MSINFO", lnReserved, @lnType, @lcBuffer, @lnBufferSize)
+				IF lnError = ERROR_SUCCESS
+					THISFORM.cMSInfoDir = LEFT(lcBuffer, lnBufferSize - 1) + "\MSINFO.EXE"
+					IF !FILE(THISFORM.cMSInfoDir)
+						THISFORM.cMSInfoDir = ""
+					ENDIF
+				ENDIF
+				=RegCloseKey(lnResult)
+				lnResult = 0
+				lcKey = IIF("NT" $ UPPER(OS()), KEY_NTCURRENTVERSION, KEY_WIN4CURRENTVERSION)
+				lnError = RegOpenKeyEx(HKEY_LOCAL_MACHINE, lcKey, lnReserved, KEY_QUERY_VALUE, @lnResult)
+				IF lnError = ERROR_SUCCESS
+					lnType = 0
+					lcBuffer = SPACE(128)
+					lnBufferSize = LEN(lcBuffer)
+					lnError = RegQueryValueEx(lnResult, "RegisteredOwner", lnReserved, @lnType, @lcBuffer, @lnBufferSize)
+					IF lnError = ERROR_SUCCESS AND lcBuffer <> CHR(0)
+						THISFORM.cntSplash.lblUserName.Caption = LEFT(lcBuffer, lnBufferSize - 1)
+					ENDIF
+				ENDIF
+				lnType = 0
+				lcBuffer = SPACE(128)
+				lnBufferSize = LEN(lcBuffer)
+				lnError = RegQueryValueEx(lnResult, "RegisteredOrganization", lnReserved, @lnType, @lcBuffer, @lnBufferSize)
+				IF lnError = ERROR_SUCCESS AND lcBuffer <> CHR(0)
+					THISFORM.cntSplash.lblUserCorp.Caption = LEFT(lcBuffer, lnBufferSize - 1)
+				ENDIF
+			ENDIF
+			=RegCloseKey(lnResult)
+		OTHERWISE
+			*-- Gets default user name from WIN.INI
+			lcRetVal = GetProStr("MS USER INFO", "DEFNAME", "", @lcBuffer, lnBufferSize)
+			THISFORM.cntSplash.lblUserName.Caption = LEFT(lcBuffer, lcRetVal)
+			*-- Get default corporation name from WIN.INI
+			lcRetVal = GetProStr("MS USER INFO", "DEFCOMPANY", "", @lcBuffer, lnBufferSize)
+			THISFORM.cntSplash.lblUserCorp.Caption = LEFT(lcBuffer, lcRetVal)
+			*-- Get location of MSINFO.EXE name from WIN.INI
+			lcRetVal = GetProStr("MICROSOFT SYSTEM INFO", "MSINFO", "", @lcBuffer, lnBufferSize)
+			THISFORM.cMSInfoDir = LEFT(lcBuffer, lcRetVal)
+	ENDCASE
+	
+	*-- Check if MSINFO.EXE exists, otherwise remove the System Info command button and shorten the form
+	IF EMPTY(THISFORM.cMSInfoDir)
+		THISFORM.cMSInfoDir = " "
+		THISFORM.cntSplash.cmdSysInfo.Enabled = .F.
+	ENDIF
+
+ENDPROC
+[END METHODS]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+24[END RESERVED2]
+[START RESERVED3]
+cmsinfodir
+*setpreferences Set the Application Caption, Name and Version.
+[END RESERVED3]
+[START RESERVED6]
+Pixels[END RESERVED6]
+[START RESERVED8]
+..\include\ez_view.h[END RESERVED8]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RUR0PYBPW
+[CLASS] container
+[BASECLASS] container
+[OBJNAME] cntSplash
+[PARENT] vc_splash_screen
+[START PROPERTIES]
+Top = 1
+Left = 1
+Width = 550
+Height = 358
+SpecialEffect = 0
+Name = "cntSplash"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RUR0PYBQ0
+[CLASS] image
+[BASECLASS] image
+[OBJNAME] imgLogo
+[PARENT] vc_splash_screen.cntSplash
+[START PROPERTIES]
+Picture = ..\
+Stretch = 1
+Height = 156
+Left = 1
+Top = 5
+Width = 252
+Name = "imgLogo"
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Init
+
+	*--- Load company logo
+	IF FILE( IMG_COMPANY_LOGO )
+		THIS.Picture = IMG_COMPANY_LOGO
+	ENDIF
+	
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RUR0PYBQ5
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] lblAppName
+[PARENT] vc_splash_screen.cntSplash
+[START PROPERTIES]
+FontItalic = .T.
+FontName = "Elephant"
+FontSize = 24
+Caption = "lblAppName"
+Height = 42
+Left = 248
+Top = 5
+Width = 298
+TabIndex = 2
+ForeColor = 64,0,128
+Name = "lblAppName"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RUP0SZ30Y
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] lblCopyright
+[PARENT] vc_splash_screen.cntSplash
+[START PROPERTIES]
+Caption = "(c) 1997-1998 Redmer Software Company."
+Height = 16
+Left = 248
+Top = 95
+Width = 298
+TabIndex = 3
+Name = "lblCopyright"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RUR0PYBQF
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] lblCopyright2
+[PARENT] vc_splash_screen.cntSplash
+[START PROPERTIES]
+Caption = "All rights reserved."
+Height = 16
+Left = 248
+Top = 110
+Width = 298
+TabIndex = 4
+Name = "lblCopyright2"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RUR0PYBQJ
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] lblAppVersion
+[PARENT] vc_splash_screen.cntSplash
+[START PROPERTIES]
+FontSize = 16
+Caption = "lblAppVersion"
+Height = 27
+Left = 248
+Top = 59
+Width = 298
+TabIndex = 5
+Name = "lblAppVersion"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RUP0SZ30Y
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] lblWarning1
+[PARENT] vc_splash_screen.cntSplash
+[START PROPERTIES]
+Caption = "Warning:  this program is protected by copyright law and international treaties.  Unauthorized"
+Height = 19
+Left = 8
+Top = 176
+Width = 538
+TabIndex = 6
+Name = "lblWarning1"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RUR0PYBQT
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] lblWarning2
+[PARENT] vc_splash_screen.cntSplash
+[START PROPERTIES]
+Caption = "reproduction or distribution of this program, or any portion of it, may result in severe civil and"
+Height = 19
+Left = 8
+Top = 194
+Width = 538
+TabIndex = 7
+Name = "lblWarning2"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RUR0PYBQY
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] lblWarning3
+[PARENT] vc_splash_screen.cntSplash
+[START PROPERTIES]
+Caption = "criminal penalties, and will be prosecuted to the maximum extent possible under law."
+Height = 19
+Left = 8
+Top = 212
+Width = 538
+TabIndex = 8
+Name = "lblWarning3"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RUR0PYBR6
+[CLASS] commandbutton
+[BASECLASS] commandbutton
+[OBJNAME] cmdOK
+[PARENT] vc_splash_screen.cntSplash
+[START PROPERTIES]
+Top = 278
+Left = 389
+Height = 25
+Width = 112
+Caption = "OK"
+Default = .T.
+TabIndex = 1
+Name = "cmdOK"
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Click
+
+	*--- User clicked OK button, simply hide this form.
+	THISFORM.Hide
+	
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RUR16YEY5
+[CLASS] commandbutton
+[BASECLASS] commandbutton
+[OBJNAME] cmdSysInfo
+[PARENT] vc_splash_screen.cntSplash
+[START PROPERTIES]
+Top = 307
+Left = 389
+Height = 25
+Width = 112
+FontSize = 8
+Caption = "\<System Info..."
+TabIndex = 2
+Name = "cmdSysInfo"
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Click
+
+	*-- Execute Microsoft System Information
+	LOCAL lcMSInfoWinDir
+
+	lcMSInfoWinDir = thisform.cMSInfoDir
+	RUN/N1 &lcMSInfoWinDir
+
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RUR16YEYD
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] lblLicense
+[PARENT] vc_splash_screen.cntSplash
+[START PROPERTIES]
+FontSize = 8
+BackStyle = 0
+Caption = "This product is licensed to:"
+Height = 16
+Left = 11
+Top = 251
+Width = 234
+TabIndex = 4
+Name = "lblLicense"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RUR16YEYH
+[CLASS] shape
+[BASECLASS] shape
+[OBJNAME] shpRectangle
+[PARENT] vc_splash_screen.cntSplash
+[START PROPERTIES]
+Top = 269
+Left = 11
+Height = 60
+Width = 252
+SpecialEffect = 0
+BackColor = 192,192,192
+Name = "shpRectangle"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RUP0SZ30Y
+[CLASS] line
+[BASECLASS] line
+[OBJNAME] linWhiteShadow
+[PARENT] vc_splash_screen.cntSplash
+[START PROPERTIES]
+BorderStyle = 1
+BorderWidth = 2
+Height = 0
+Left = 1
+Top = 240
+Width = 546
+BorderColor = 255,255,255
+Name = "linWhiteShadow"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RUP0SZ30Y
+[CLASS] line
+[BASECLASS] line
+[OBJNAME] linBlackVertical
+[PARENT] vc_splash_screen.cntSplash
+[START PROPERTIES]
+Height = 0
+Left = 1
+Top = 239
+Width = 546
+BorderColor = 0,0,0
+Name = "linBlackVertical"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RUR16YEYT
+[CLASS] line
+[BASECLASS] line
+[OBJNAME] Line1
+[PARENT] vc_splash_screen.cntSplash
+[START PROPERTIES]
+BorderStyle = 1
+BorderWidth = 2
+Height = 0
+Left = 1
+Top = 165
+Width = 546
+BorderColor = 255,255,255
+Name = "Line1"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RUR16YEYX
+[CLASS] line
+[BASECLASS] line
+[OBJNAME] Line2
+[PARENT] vc_splash_screen.cntSplash
+[START PROPERTIES]
+Height = 0
+Left = 1
+Top = 164
+Width = 546
+BorderColor = 0,0,0
+Name = "Line2"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RUP0SZ30Y
+[CLASS] line
+[BASECLASS] line
+[OBJNAME] Line3
+[PARENT] vc_splash_screen.cntSplash
+[START PROPERTIES]
+BorderStyle = 1
+BorderWidth = 2
+Height = 0
+Left = 248
+Top = 87
+Width = 299
+BorderColor = 255,255,255
+Name = "Line3"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RUP0SZ30Y
+[CLASS] line
+[BASECLASS] line
+[OBJNAME] Line4
+[PARENT] vc_splash_screen.cntSplash
+[START PROPERTIES]
+Height = 0
+Left = 248
+Top = 86
+Width = 299
+BorderColor = 0,0,0
+Name = "Line4"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RUR16YEZA
+[CLASS] line
+[BASECLASS] line
+[OBJNAME] Line5
+[PARENT] vc_splash_screen.cntSplash
+[START PROPERTIES]
+BorderStyle = 1
+BorderWidth = 2
+Height = 0
+Left = 248
+Top = 48
+Width = 299
+BorderColor = 255,255,255
+Name = "Line5"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RUR16YEZE
+[CLASS] line
+[BASECLASS] line
+[OBJNAME] Line6
+[PARENT] vc_splash_screen.cntSplash
+[START PROPERTIES]
+Height = 0
+Left = 248
+Top = 47
+Width = 299
+BorderColor = 0,0,0
+Name = "Line6"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RUR16YEZH
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] lblUserName
+[PARENT] vc_splash_screen.cntSplash
+[START PROPERTIES]
+FontBold = .F.
+FontSize = 8
+BackStyle = 0
+Caption = "lblUserName"
+Height = 25
+Left = 17
+Top = 278
+Width = 205
+TabIndex = 5
+Name = "lblUserName"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RUR16YEZL
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] lblUserCorp
+[PARENT] vc_splash_screen.cntSplash
+[START PROPERTIES]
+FontBold = .F.
+FontSize = 8
+BackStyle = 0
+Caption = "lblUserCorp"
+Height = 21
+Left = 17
+Top = 299
+Width = 205
+TabIndex = 6
+Name = "lblUserCorp"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] vc_splash_screen
+[START PROPERTIES]
+Arial, 0, 9, 5, 15, 12, 16, 3, 0
+Arial, 0, 8, 5, 14, 11, 14, 3, 0
+[END PROPERTIES]
+[START RESERVED1]
+  ..\include\ez_view.hÞ]î›G% ..\include\foxpro.hæ^  v ..\include\strings.hî_G¾0![END RESERVED1]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVK18JXSQ
+[CLASS] form
+[BASECLASS] form
+[OBJNAME] vc_help
+[START PROPERTIES]
+DoCreate = .T.
+Caption = "Help"
+Name = "vc_help"
+[END PROPERTIES]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+1[END RESERVED2]
+[START RESERVED6]
+Pixels[END RESERVED6]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] vc_help
+[START PROPERTIES]
+Arial, 0, 9, 5, 15, 12, 16, 3, 0
+[END PROPERTIES]
+[EOF]

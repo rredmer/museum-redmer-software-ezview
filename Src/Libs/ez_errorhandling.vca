@@ -1,0 +1,1167 @@
+SCCTEXT Version 4.0.0.2
+PLATFORM C(8,0),UNIQUEID C(10,0),TIMESTAMP N(10,0),CLASS M(4,0),CLASSLOC M(4,0),BASECLASS M(4,0),OBJNAME M(4,0),PARENT M(4,0),PROPERTIES M(4,0),PROTECTED M(4,0),METHODS M(4,0),OBJCODE M(4,0),OLE M(4,0),OLE2 M(4,0),RESERVED1 M(4,0),RESERVED2 M(4,0),RESERVED3 M(4,0),RESERVED4 M(4,0),RESERVED5 M(4,0),RESERVED6 M(4,0),RESERVED7 M(4,0),RESERVED8 M(4,0),USER M(4,0)
+1252
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] Class     
+[START RESERVED1]
+VERSION =   3.00[END RESERVED1]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ1E32T9
+[CLASS] form
+[BASECLASS] form
+[OBJNAME] vc_error_log_maintenance
+[START PROPERTIES]
+Height = 569
+Width = 788
+DoCreate = .T.
+AutoCenter = .T.
+BorderStyle = 3
+Caption = "Error Maintenance"
+WindowType = 1
+AlwaysOnTop = .T.
+cmode = ""
+Name = "vc_add_error"
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Activate
+
+	*--- Initialize mode-based controls
+	IF THISFORM.cMode = "ADD"
+
+		WITH THISFORM.cntError
+			.txtSrv_Number.value = 0
+			.txtSrv_Status.value = "N"
+			.txtSrv_Type.value = ""
+			.txtStation.value = goRegistry.cStation_id
+			.txtUser.value = goSecurity.cUser_id
+			.txtDateIn.value = DATE()
+			.txtTimeIn.value = TIME()
+			.txtDateOut.value = CTOD("  /  /  ")
+			.txtTimeOut.value = ""
+			.txtTechName.value = ""
+			.txtStatusMsg.value = ""
+			.txtMessage.value = ""
+			.txtResolution.value = ""
+		ENDWITH
+		
+	ELSE
+	
+		*--- Form mode is set to edit record, retrieve values from table
+		WITH THISFORM.cntError
+			.txtSrv_Number.value = LOGS.SRV_NUMBER
+			.txtSrv_Status.value = LOGS.SRV_STATUS
+			.txtSrv_Type.value = LOGS.SRV_TYPE
+			.txtStation.value = LOGS.STATIONID
+			.txtUser.value = LOGS.USERID
+			.txtDateIn.value = LOGS.DATEIN
+			.txtTimeIn.value = LOGS.TIMEIN
+			.txtDateOut.value = LOGS.DATEOUT
+			.txtTimeOut.value = LOGS.TIMEOUT
+			.txtTechName.value = LOGS.TECHNAME
+			.txtStatusMsg.value = LOGS.STATUS
+			.txtMessage.value = LOGS.MESSAGE
+			.txtResolution.value = LOGS.RESOLUTION
+		ENDWITH
+	
+	ENDIF
+ENDPROC
+[END METHODS]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+30[END RESERVED2]
+[START RESERVED3]
+cmode Set to "ADD" when adding users, "EDIT" when editing users.
+[END RESERVED3]
+[START RESERVED6]
+Pixels[END RESERVED6]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ1EHK3Y
+[CLASS] container
+[BASECLASS] container
+[OBJNAME] cntError
+[PARENT] vc_error_log_maintenance
+[START PROPERTIES]
+Top = 1
+Left = 1
+Width = 785
+Height = 527
+SpecialEffect = 0
+TabIndex = 1
+Name = "cntError"
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Error
+LPARAMETERS nError, cMethod, nLine
+
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVL0L8ZNE
+[CLASS] shape
+[BASECLASS] shape
+[OBJNAME] shpBoxKeyField
+[PARENT] vc_error_log_maintenance.cntError
+[START PROPERTIES]
+Top = 7
+Left = 6
+Height = 34
+Width = 160
+BackStyle = 0
+SpecialEffect = 0
+Name = "shpBoxKeyField"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ1EHK48
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] lblUser_id
+[PARENT] vc_error_log_maintenance.cntError
+[START PROPERTIES]
+Caption = "Service #"
+Height = 17
+Left = 12
+Top = 16
+Width = 61
+TabIndex = 2
+Name = "lblUser_id"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ1EHK49
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] txtSrv_Number
+[PARENT] vc_error_log_maintenance.cntError
+[START PROPERTIES]
+Enabled = .F.
+Format = ""
+Height = 23
+Left = 85
+MaxLength = 10
+TabIndex = 1
+Top = 13
+Width = 67
+Name = "txtSrv_Number"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVK108HCM
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] lblPassword
+[PARENT] vc_error_log_maintenance.cntError
+[START PROPERTIES]
+Caption = "Status"
+Height = 17
+Left = 8
+Top = 61
+Width = 71
+TabIndex = 9
+Name = "lblPassword"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ1EHK4J
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] txtSrv_Status
+[PARENT] vc_error_log_maintenance.cntError
+[START PROPERTIES]
+Format = "!"
+Height = 23
+Left = 86
+MaxLength = 1
+TabIndex = 3
+Top = 57
+Width = 24
+Name = "txtSrv_Status"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVK108HCM
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] lblFirstName
+[PARENT] vc_error_log_maintenance.cntError
+[START PROPERTIES]
+Caption = "Type"
+Height = 17
+Left = 8
+Top = 87
+Width = 71
+TabIndex = 10
+Name = "lblFirstName"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVK10HG2G
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] txtSrv_Type
+[PARENT] vc_error_log_maintenance.cntError
+[START PROPERTIES]
+Format = "!"
+Height = 23
+Left = 86
+MaxLength = 1
+TabIndex = 4
+Top = 83
+Width = 24
+Name = "txtSrv_Type"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVK10HG2H
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] lblLastName
+[PARENT] vc_error_log_maintenance.cntError
+[START PROPERTIES]
+Caption = "Station"
+Height = 17
+Left = 8
+Top = 112
+Width = 71
+TabIndex = 11
+Name = "lblLastName"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVK10HG2Q
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] txtStation
+[PARENT] vc_error_log_maintenance.cntError
+[START PROPERTIES]
+Format = ""
+Height = 23
+Left = 86
+MaxLength = 10
+TabIndex = 5
+Top = 108
+Width = 150
+Name = "txtStation"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] RESERVED  
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] lblSecurityLevel
+[PARENT] vc_error_log_maintenance.cntError
+[START PROPERTIES]
+Caption = "Date Out"
+Comment = ""
+Height = 17
+Left = 369
+Top = 120
+Width = 78
+TabIndex = 21
+Name = "lblSecurityLevel"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ1E32T9
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] txtDateOut
+[PARENT] vc_error_log_maintenance.cntError
+[START PROPERTIES]
+Format = ""
+Height = 23
+Left = 447
+MaxLength = 8
+TabIndex = 17
+Top = 116
+Width = 150
+Comment = ""
+Name = "txtDateOut"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ1EHK3Y
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] lblDepartment
+[PARENT] vc_error_log_maintenance.cntError
+[START PROPERTIES]
+Caption = "User"
+Height = 17
+Left = 8
+Top = 137
+Width = 71
+TabIndex = 12
+Name = "lblDepartment"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ1EHK48
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] txtUser
+[PARENT] vc_error_log_maintenance.cntError
+[START PROPERTIES]
+Format = ""
+Height = 23
+Left = 86
+MaxLength = 10
+TabIndex = 6
+Top = 133
+Width = 150
+Name = "txtUser"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVL0L8ZP2
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] Label1
+[PARENT] vc_error_log_maintenance.cntError
+[START PROPERTIES]
+BackStyle = 0
+Caption = "Time Out"
+Height = 17
+Left = 369
+Top = 144
+Width = 71
+TabIndex = 22
+BackColor = 255,255,255
+Name = "Label1"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVL0L8ZPC
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] txtTimeOut
+[PARENT] vc_error_log_maintenance.cntError
+[START PROPERTIES]
+Format = ""
+Height = 23
+Left = 447
+MaxLength = 8
+TabIndex = 18
+Top = 140
+Width = 150
+Name = "txtTimeOut"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVL0L8ZPD
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] Label2
+[PARENT] vc_error_log_maintenance.cntError
+[START PROPERTIES]
+Caption = "Status Msg"
+Height = 17
+Left = 369
+Top = 192
+Width = 77
+TabIndex = 24
+Name = "Label2"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVL0L8ZPM
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] txtStatusMsg
+[PARENT] vc_error_log_maintenance.cntError
+[START PROPERTIES]
+Format = ""
+Height = 23
+Left = 447
+MaxLength = 40
+TabIndex = 20
+Top = 188
+Width = 329
+Name = "txtStatusMsg"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVL0L8ZPN
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] Label3
+[PARENT] vc_error_log_maintenance.cntError
+[START PROPERTIES]
+Caption = "Time In"
+Comment = ""
+Height = 17
+Left = 8
+Top = 186
+Width = 78
+TabIndex = 14
+Name = "Label3"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVL0L8ZPW
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] txtTimeIn
+[PARENT] vc_error_log_maintenance.cntError
+[START PROPERTIES]
+Format = ""
+Height = 23
+Left = 86
+MaxLength = 8
+TabIndex = 8
+Top = 182
+Width = 149
+Comment = ""
+Name = "txtTimeIn"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVK108HCM
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] Label4
+[PARENT] vc_error_log_maintenance.cntError
+[START PROPERTIES]
+Caption = "Date In"
+Height = 17
+Left = 8
+Top = 161
+Width = 71
+TabIndex = 13
+Name = "Label4"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVK10HG2G
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] txtDateIn
+[PARENT] vc_error_log_maintenance.cntError
+[START PROPERTIES]
+Format = ""
+Height = 23
+Left = 86
+MaxLength = 8
+TabIndex = 7
+Top = 157
+Width = 150
+Name = "txtDateIn"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVK108HCM
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] Label5
+[PARENT] vc_error_log_maintenance.cntError
+[START PROPERTIES]
+Caption = "Tech Name"
+Height = 17
+Left = 369
+Top = 168
+Width = 71
+TabIndex = 23
+Name = "Label5"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVL0L8ZQ6
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] txtTechName
+[PARENT] vc_error_log_maintenance.cntError
+[START PROPERTIES]
+Format = ""
+Height = 23
+Left = 447
+MaxLength = 20
+TabIndex = 19
+Top = 164
+Width = 150
+Name = "txtTechName"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVL0L8ZQG
+[CLASS] editbox
+[BASECLASS] editbox
+[OBJNAME] txtMessage
+[PARENT] vc_error_log_maintenance.cntError
+[START PROPERTIES]
+Height = 289
+Left = 6
+TabIndex = 16
+Top = 228
+Width = 359
+Name = "txtMessage"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVL0L8ZQH
+[CLASS] editbox
+[BASECLASS] editbox
+[OBJNAME] txtResolution
+[PARENT] vc_error_log_maintenance.cntError
+[START PROPERTIES]
+Height = 289
+Left = 369
+TabIndex = 26
+Top = 228
+Width = 410
+Name = "txtResolution"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVL0L8ZQQ
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] Label6
+[PARENT] vc_error_log_maintenance.cntError
+[START PROPERTIES]
+Caption = "Message"
+Height = 15
+Left = 8
+Top = 213
+Width = 71
+TabIndex = 15
+Name = "Label6"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVL0L8ZQR
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] Label7
+[PARENT] vc_error_log_maintenance.cntError
+[START PROPERTIES]
+Caption = "Resolution"
+Height = 15
+Left = 371
+Top = 214
+Width = 71
+TabIndex = 25
+Name = "Label7"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ1EHK5O
+[CLASS] commandgroup
+[BASECLASS] commandgroup
+[OBJNAME] cmgError
+[PARENT] vc_error_log_maintenance
+[START PROPERTIES]
+ButtonCount = 2
+Value = 1
+Height = 37
+Left = 2
+Top = 530
+Width = 783
+TabIndex = 2
+Name = "cmgError"
+Command1.Top = 6
+Command1.Left = 5
+Command1.Height = 27
+Command1.Width = 84
+Command1.Caption = "\<Cancel"
+Command1.Name = "cmdCancel"
+Command2.Top = 6
+Command2.Left = 91
+Command2.Height = 27
+Command2.Width = 84
+Command2.Caption = "\<Save"
+Command2.Default = .T.
+Command2.Name = "cmdSave"
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE cmdCancel.Click
+
+	*--- Exit this form.
+	THISFORM.Hide
+ENDPROC
+PROCEDURE cmdSave.Click
+
+	*--- Save error message information
+
+	SELECT LOGS
+	IF THISFORM.cMode = "ADD"
+		APPEND BLANK IN LOGS
+		REPLACE logs.srv_number WITH RECNO( "LOGS" )
+	ENDIF
+
+	REPLACE	logs.srv_status WITH THISFORM.cntError.txtSrv_Status.value,;
+			logs.srv_type   WITH THISFORM.cntError.txtSrv_Type.value,;
+			logs.Stationid  WITH THISFORM.cntError.txtStation.value,;
+			logs.Userid     WITH THISFORM.cntError.txtUser.value,;
+			logs.datein     WITH THISFORM.cntError.txtDateIn.value,;
+			logs.timein     WITH THISFORM.cntError.txtTimeIn.value,;
+			logs.techname   WITH THISFORM.cntError.txtTechName.value,;
+			logs.status     WITH THISFORM.cntError.txtStatusMsg.value,;
+			logs.message    WITH THISFORM.cntError.txtMessage.value,;
+			logs.resolution WITH THISFORM.cntError.txtResolution.value,;
+			logs.dateout    WITH THISFORM.cntError.txtDateOut.value,;
+			logs.timeout    WITH THISFORM.cntError.txtTimeOut.value
+
+	FLUSH
+
+	THISFORM.Hide
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] vc_error_log_maintenance
+[START PROPERTIES]
+Arial, 0, 9, 5, 15, 12, 16, 3, 0
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVK108HCM
+[CLASS] form
+[BASECLASS] form
+[OBJNAME] vc_error_log_selection
+[START PROPERTIES]
+Height = 439
+Width = 669
+DoCreate = .T.
+AutoCenter = .T.
+BorderStyle = 2
+Caption = "Error Selection"
+ControlBox = .F.
+WindowType = 1
+AlwaysOnTop = .T.
+BackColor = 255,0,0
+Name = "vc_error_log_selection"
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Error
+LPARAMETERS nError, cMethod, nLine
+	goSQL.Error(nError, cMethod, nLine)
+ENDPROC
+[END METHODS]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+29[END RESERVED2]
+[START RESERVED3]
+*handleerror This is the global error handling routine.
+[END RESERVED3]
+[START RESERVED6]
+Pixels[END RESERVED6]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVK10HG2Q
+[CLASS] commandgroup
+[BASECLASS] commandgroup
+[OBJNAME] cmgErrorLog
+[PARENT] vc_error_log_selection
+[START PROPERTIES]
+ButtonCount = 4
+BackStyle = 0
+BorderStyle = 0
+Value = 1
+Height = 40
+Left = -1
+Top = 403
+Width = 665
+Name = "cmgErrorLog"
+Command1.Top = 6
+Command1.Left = 5
+Command1.Height = 27
+Command1.Width = 84
+Command1.Caption = "E\<xit"
+Command1.TabIndex = 1
+Command1.Name = "cmdExit"
+Command2.Top = 6
+Command2.Left = 91
+Command2.Height = 27
+Command2.Width = 84
+Command2.Caption = "\<Add"
+Command2.TabIndex = 2
+Command2.Name = "cmdAdd"
+Command3.Top = 6
+Command3.Left = 263
+Command3.Height = 27
+Command3.Width = 84
+Command3.Caption = "\<Delete"
+Command3.TabIndex = 4
+Command3.Name = "cmdDelete"
+Command4.Top = 6
+Command4.Left = 177
+Command4.Height = 27
+Command4.Width = 84
+Command4.Caption = "\<Edit"
+Command4.TabIndex = 3
+Command4.Name = "cmdEdit"
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE cmdExit.Click
+
+	*--- Exit this form.
+	THISFORM.Hide
+ENDPROC
+PROCEDURE cmdAdd.Click
+
+	*--- Add a new user record.
+	LOCAL loAdd
+	loAdd = CREATEOBJECT( "vc_Error_Maintenance" )
+	loAdd.cMode = "ADD"
+	loAdd.Show(1)
+	RELEASE loAdd
+	THISFORM.Refresh
+
+ENDPROC
+PROCEDURE cmdDelete.Click
+
+	*--- Delete user
+	LOCAL lnAns
+	lnAns = MESSAGEBOX( "Delete error ["+ALLTRIM(STR(LOGS.SRV_NUMBER))+"] ?", 32+4+256, "WARNING!" )
+	IF lnAns = 6
+		DELETE IN LOGS
+		THISFORM.Refresh
+	ENDIF
+ENDPROC
+PROCEDURE cmdEdit.Click
+
+	*--- Edit a user record.
+	LOCAL loAdd
+	loAdd = CREATEOBJECT( "vc_Error_Maintenance" )
+	loAdd.cMode = "EDIT"
+	loAdd.Show(1)
+	RELEASE loAdd
+	THISFORM.Refresh
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RXP0QEHPK
+[CLASS] grid
+[BASECLASS] grid
+[OBJNAME] grdErrors
+[PARENT] vc_error_log_selection
+[START PROPERTIES]
+ColumnCount = 13
+DeleteMark = .F.
+Height = 402
+Left = 3
+ReadOnly = .T.
+RecordSource = "LOGS"
+Top = 3
+Width = 663
+Name = "grdErrors"
+Column1.Name = "Column1"
+Column2.Name = "Column2"
+Column3.Name = "Column3"
+Column4.Name = "Column4"
+Column5.Name = "Column5"
+Column6.Name = "Column6"
+Column7.Name = "Column7"
+Column8.Name = "Column8"
+Column9.Name = "Column9"
+Column10.Name = "Column10"
+Column11.Name = "Column11"
+Column12.Name = "Column12"
+Column13.Name = "Column13"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RXP0QEHQ4
+[CLASS] header
+[BASECLASS] header
+[OBJNAME] Header1
+[PARENT] vc_error_log_selection.grdErrors.Column1
+[START PROPERTIES]
+Caption = "Header1"
+Name = "Header1"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RXP0QEHQ5
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] Text1
+[PARENT] vc_error_log_selection.grdErrors.Column1
+[START PROPERTIES]
+BorderStyle = 0
+Margin = 0
+ForeColor = 0,0,0
+BackColor = 255,255,255
+Name = "Text1"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RXP0QEHQ6
+[CLASS] header
+[BASECLASS] header
+[OBJNAME] Header1
+[PARENT] vc_error_log_selection.grdErrors.Column2
+[START PROPERTIES]
+Caption = "Header1"
+Name = "Header1"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RXP0QEHQE
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] Text1
+[PARENT] vc_error_log_selection.grdErrors.Column2
+[START PROPERTIES]
+BorderStyle = 0
+Margin = 0
+ForeColor = 0,0,0
+BackColor = 255,255,255
+Name = "Text1"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RXP0QEHQF
+[CLASS] header
+[BASECLASS] header
+[OBJNAME] Header1
+[PARENT] vc_error_log_selection.grdErrors.Column3
+[START PROPERTIES]
+Caption = "Header1"
+Name = "Header1"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RXP0QEHQO
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] Text1
+[PARENT] vc_error_log_selection.grdErrors.Column3
+[START PROPERTIES]
+BorderStyle = 0
+Margin = 0
+ForeColor = 0,0,0
+BackColor = 255,255,255
+Name = "Text1"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RXP0QEHQP
+[CLASS] header
+[BASECLASS] header
+[OBJNAME] Header1
+[PARENT] vc_error_log_selection.grdErrors.Column4
+[START PROPERTIES]
+Caption = "Header1"
+Name = "Header1"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RXP0QEHQQ
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] Text1
+[PARENT] vc_error_log_selection.grdErrors.Column4
+[START PROPERTIES]
+BorderStyle = 0
+Margin = 0
+ForeColor = 0,0,0
+BackColor = 255,255,255
+Name = "Text1"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RXP0QEHQY
+[CLASS] header
+[BASECLASS] header
+[OBJNAME] Header1
+[PARENT] vc_error_log_selection.grdErrors.Column5
+[START PROPERTIES]
+Caption = "Header1"
+Name = "Header1"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RXP0QEHQZ
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] Text1
+[PARENT] vc_error_log_selection.grdErrors.Column5
+[START PROPERTIES]
+BorderStyle = 0
+Margin = 0
+ForeColor = 0,0,0
+BackColor = 255,255,255
+Name = "Text1"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RXP0QEHR8
+[CLASS] header
+[BASECLASS] header
+[OBJNAME] Header1
+[PARENT] vc_error_log_selection.grdErrors.Column6
+[START PROPERTIES]
+Caption = "Header1"
+Name = "Header1"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RXP0QEHR9
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] Text1
+[PARENT] vc_error_log_selection.grdErrors.Column6
+[START PROPERTIES]
+BorderStyle = 0
+Margin = 0
+ForeColor = 0,0,0
+BackColor = 255,255,255
+Name = "Text1"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RXP0QEHRA
+[CLASS] header
+[BASECLASS] header
+[OBJNAME] Header1
+[PARENT] vc_error_log_selection.grdErrors.Column7
+[START PROPERTIES]
+Caption = "Header1"
+Name = "Header1"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RXP0QEHRI
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] Text1
+[PARENT] vc_error_log_selection.grdErrors.Column7
+[START PROPERTIES]
+BorderStyle = 0
+Margin = 0
+ForeColor = 0,0,0
+BackColor = 255,255,255
+Name = "Text1"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RXP0QEHRJ
+[CLASS] header
+[BASECLASS] header
+[OBJNAME] Header1
+[PARENT] vc_error_log_selection.grdErrors.Column8
+[START PROPERTIES]
+Caption = "Header1"
+Name = "Header1"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RXP0QEHRS
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] Text1
+[PARENT] vc_error_log_selection.grdErrors.Column8
+[START PROPERTIES]
+BorderStyle = 0
+Margin = 0
+ForeColor = 0,0,0
+BackColor = 255,255,255
+Name = "Text1"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RXP0QEHRT
+[CLASS] header
+[BASECLASS] header
+[OBJNAME] Header1
+[PARENT] vc_error_log_selection.grdErrors.Column9
+[START PROPERTIES]
+Caption = "Header1"
+Name = "Header1"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RXP0QEHRU
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] Text1
+[PARENT] vc_error_log_selection.grdErrors.Column9
+[START PROPERTIES]
+BorderStyle = 0
+Margin = 0
+ForeColor = 0,0,0
+BackColor = 255,255,255
+Name = "Text1"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RXP0QEHS2
+[CLASS] header
+[BASECLASS] header
+[OBJNAME] Header1
+[PARENT] vc_error_log_selection.grdErrors.Column10
+[START PROPERTIES]
+Caption = "Header1"
+Name = "Header1"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RXP0QEHS3
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] Text1
+[PARENT] vc_error_log_selection.grdErrors.Column10
+[START PROPERTIES]
+BorderStyle = 0
+Margin = 0
+ForeColor = 0,0,0
+BackColor = 255,255,255
+Name = "Text1"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RXP0QEHSC
+[CLASS] header
+[BASECLASS] header
+[OBJNAME] Header1
+[PARENT] vc_error_log_selection.grdErrors.Column11
+[START PROPERTIES]
+Caption = "Header1"
+Name = "Header1"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RXP0QEHSD
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] Text1
+[PARENT] vc_error_log_selection.grdErrors.Column11
+[START PROPERTIES]
+BorderStyle = 0
+Margin = 0
+ForeColor = 0,0,0
+BackColor = 255,255,255
+Name = "Text1"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RXP0QEHSE
+[CLASS] header
+[BASECLASS] header
+[OBJNAME] Header1
+[PARENT] vc_error_log_selection.grdErrors.Column12
+[START PROPERTIES]
+Caption = "Header1"
+Name = "Header1"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RXP0QEHSM
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] Text1
+[PARENT] vc_error_log_selection.grdErrors.Column12
+[START PROPERTIES]
+BorderStyle = 0
+Margin = 0
+ForeColor = 0,0,0
+BackColor = 255,255,255
+Name = "Text1"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RXP0QEHSN
+[CLASS] header
+[BASECLASS] header
+[OBJNAME] Header1
+[PARENT] vc_error_log_selection.grdErrors.Column13
+[START PROPERTIES]
+Caption = "Header1"
+Name = "Header1"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RXP0QEHSW
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] Text1
+[PARENT] vc_error_log_selection.grdErrors.Column13
+[START PROPERTIES]
+BorderStyle = 0
+Margin = 0
+ForeColor = 0,0,0
+BackColor = 255,255,255
+Name = "Text1"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] vc_error_log_selection
+[START PROPERTIES]
+Arial, 0, 9, 5, 15, 12, 16, 3, 0
+[END PROPERTIES]
+[EOF]

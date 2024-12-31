@@ -1,0 +1,79 @@
+App Name   	RSC EZ-VIEW
+App Version	2000-09-10 21:35:50
+Frame Caption	RSC EZ-VIEW Setup
+Dialog Caption Base	RSC EZ-VIEW
+Usage String	Usage:  Setup
+About Box String	Redmer Software Company\n\nThis installation was created using the Visual FoxPro Setup Wizard.
+Check Modules	"Fox_4000001,Microsoft Visual FoxPro, graph, MS Graph, ed, MS Draw, msinfo, MS Info, MSOfficeWClass, Microsoft Office Manager, MOM Class, Office Shortcut Bar"
+MSAPPS Mode	local
+Suppress Serial Number Dialog
+Inf File Name	SETUP.INF
+Maximum Object ID	63
+Floppy Mode Root Object ID	2 : 1
+Maintenance Mode Root Object ID	3 : 1
+Batch Mode Root Object ID	2 : 1
+Setup Version	3.0.0.0
+
+ObjID	Install During Batch Mode	Title	Descr	Type	Data	Bmp Id	Vital	Shared	Dir Chang	Dest Dir	Check Directory
+1			Search for previous versions.	AppSearch	"""C:\EZVIEW\"", """", """", 12, ""yes"", ""yes"","					
+2		Floppy Installation		AppMainDlg	5				Yes	
+3		Maintenance Installation		CustomDlg	7					
+4										
+5	Yes		Install all files for RSC EZ-VIEW	Group	7	"wizset32.dll, 111"				
+6										
+7	Yes	RSC EZ-VIEW	RSC EZ-VIEW will be installed.	Group	8 9 13 12 10 15 11 14 16					
+8			*** RSC EZ-VIEW Files	CopyFile	"Application,_0721AAD38"		vital			
+9			*** RSC EZ-VIEW Files	CopySection	Application		vital			
+10			Visual Foxpro Runtime	Group	47 48 49 51 52					
+11			Miscellanous files	Group	19 20 23 24 26 27 40 41		vital			
+12			OLEAUT32 System	Group	31 32 34 35 37 38		vital			
+13		Setup Message	Installation of this product requires system administrator privileges.	CustomAction	"wizset32.dll, DetectAdminPrivileges"					
+14			*** Program Manager Items	Group	55		vital			
+15			VC Runtime	Group	44 45		vital			
+16			Uninstall	Group	57 58 59 60 61 62					
+17										
+18										
+19	Yes	MSCOMCT2.OCX		InstallShared	"MSCOMCT2,Mscomct2Ocx,MSCOMCT2.OCX,,8"					%M
+20	Yes	MSCOMCT2.OCX		Depend	19 ? 21					
+21	Yes	MSCOMCT2.OCX		SelfReg	"MSCOMCT2,Mscomct2Ocx"					%M
+22										
+23	Yes			InstallSysFile	"MSCOMCTL,ComcatDll"					
+24	Yes	COMCAT.DLL		Depend	23 ? 25					
+25	Yes	COMCAT.DLL		SelfReg	"MSCOMCTL,ComcatDll"					%M
+26	Yes	MSCOMCTL.OCX		InstallShared	"MSCOMCTL,MscomctlOcx,MSCOMCTL.OCX,,8"					%M
+27	Yes	MSCOMCTL.OCX		Depend	26 ? 28					
+28	Yes	MSCOMCTL.OCX		SelfReg	"MSCOMCTL,MscomctlOcx"					%M
+29										
+30										
+31	Yes			InstallSysFile	"System,Oleaut32Dll"					
+32	Yes	OLEAUT32.DLL		Depend	31 ? 33					
+33	Yes	OLEAUT32.DLL		SelfReg	"System,Oleaut32Dll"					%M
+34	Yes			InstallSysFile	"System,Olepro32Dll"					
+35	Yes	OLEPRO32.DLL		Depend	34 ? 36					
+36	Yes	OLEPRO32.DLL		SelfReg	"System,Olepro32Dll"					%M
+37	Yes			InstallSysFile	"System,AsycfiltDll"					
+38	Yes			InstallSysFile	"System,Stdole2Tlb"					
+39										
+40	Yes	TABCTL32.OCX		InstallShared	"TABCTL32,Tabctl32Ocx,TABCTL32.OCX,,8"					%M
+41	Yes	TABCTL32.OCX		Depend	40 ? 42					
+42	Yes	TABCTL32.OCX		SelfReg	"TABCTL32,Tabctl32Ocx"					%M
+43										
+44	Yes			InstallSysFile	"VC Runtime,MsvcrtDll"					
+45	Yes			InstallSysFile	"VC Runtime,Msvcrt40Dll"					
+46										
+47	Yes			InstallSysFile	"VFP Runtime,Vfp6renuDll"					
+48	Yes			InstallSysFile	"VFP Runtime,Vfp6runExe"					
+49	Yes	VFP6RUN.EXE		Depend	48 ? 50					
+50	Yes	VFP6RUN.EXE		CustomAction	"""wizset32.dll"",""ExecutePostSetupCommand"",""VFP6RUN.EXE /RegServer"""					%M
+51	Yes			InstallSysFile	"VFP Runtime,Vfp6rDll"					
+52	Yes	VFP6R.DLL		Depend	51 ? 53					
+53	Yes	VFP6R.DLL		SelfReg	"VFP Runtime,Vfp6rDll"					%M
+54										
+55	Yes		Program Manager Icon	AddProgmanItem	"EZVIEW<EZVIEW>, RSC_EZ-V<RSC EZ-VIEW>, %s\EZ_VIEW.EXE, ""%s"", """","""","					%D
+56										
+57				AddRegData	"LOCAL,Software\Microsoft\Windows\CurrentVersion\Uninstall\RSC EZ-VIEW ,DisplayName,RSC EZ-VIEW ,REG_SZ"					
+58				AddRegData	"LOCAL,Software\Microsoft\Windows\CurrentVersion\Uninstall\RSC EZ-VIEW ,UninstallString,%s\setup\setup.exe,REG_SZ"					%d
+59				CopySection	"Setup"					%d\setup
+60				CopyFile	"VC Runtime,Msvcrt40Dll"					%d\setup
+61				CopyFile	"VC Runtime,MsvcrtDll"					%d\setup
+62				WriteTableFile	"setup.stf"					%d\setup

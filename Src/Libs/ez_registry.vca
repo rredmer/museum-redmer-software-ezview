@@ -1,0 +1,359 @@
+SCCTEXT Version 4.0.0.2
+PLATFORM C(8,0),UNIQUEID C(10,0),TIMESTAMP N(10,0),CLASS M(4,0),CLASSLOC M(4,0),BASECLASS M(4,0),OBJNAME M(4,0),PARENT M(4,0),PROPERTIES M(4,0),PROTECTED M(4,0),METHODS M(4,0),OBJCODE M(4,0),OLE M(4,0),OLE2 M(4,0),RESERVED1 M(4,0),RESERVED2 M(4,0),RESERVED3 M(4,0),RESERVED4 M(4,0),RESERVED5 M(4,0),RESERVED6 M(4,0),RESERVED7 M(4,0),RESERVED8 M(4,0),USER M(4,0)
+1252
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] Class     
+[START RESERVED1]
+VERSION =   3.00[END RESERVED1]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ0KLV2F
+[CLASS] form
+[BASECLASS] form
+[OBJNAME] vc_registry
+[START PROPERTIES]
+Height = 167
+Width = 685
+DoCreate = .T.
+AutoCenter = .T.
+BorderStyle = 3
+Caption = "Station Preferences"
+ControlBox = .F.
+WindowType = 1
+AlwaysOnTop = .T.
+BackColor = 0,128,64
+cstation_id = ""
+capp_id = ""
+cdatapath = ""
+app_inifile = EZORDER.INI
+Name = "vc_registry"
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE getvalue
+
+	*--- Retrieve keys from the EZ-LAB Registry.
+	LPARAMETERS lpcKey								&& The name of the key to retrieve.
+
+
+	*--- Seek the key expression for this station.
+	IF SEEK( PADR(THIS.cStation_id,10) + lpcKey, "REGISTRY", "KEY" )
+	
+		DO CASE
+		
+			CASE REGISTRY.TYPE = "C"		&& Character/String
+
+				RETURN(REGISTRY.VALUE)
+
+			CASE REGISTRY.TYPE = "N"		&& Number
+
+				RETURN( VAL( REGISTRY.VALUE ) )
+
+			CASE REGISTRY.TYPE = "L"		&& Boolean/Logical
+			
+				RETURN( IIF(ALLTRIM(REGISTRY.VALUE)="Y", .T., .F.) )
+				
+			CASE REGISTRY.TYPE = "D"		&& Date/Time
+			
+				RETURN( CTOD( REGISTRY.VALUE ) )
+			
+			OTHERWISE
+			
+				RETURN ("")
+		ENDCASE
+
+	ELSE
+	
+		*--- The key was not found in the registry, display an error message.
+		**** WAIT "ERROR:  KEY [" + lpcKey + "] NOT FOUND." WINDOW NOWAIT
+	
+	ENDIF
+
+	RETURN("")
+
+
+ENDPROC
+PROCEDURE putvalue
+
+	*--- Store a key in the EZ-LAB Registry.
+	LPARAMETERS lpcKey, lpvValue
+	LOCAL lcType, lcValue
+
+	*--- Store the value passed in the registry.
+	lcType = TYPE( "lpvValue" )
+	DO CASE
+
+		CASE lcType = "C"					&& Character/String
+			lcValue = lpvValue
+		CASE lcType = "N"					
+			lcValue = ALLTRIM(STR(lpvValue))
+		CASE lcType = "L"					
+			lcValue = IIF(lpvValue=.T., "Y","N")
+		CASE lcType = "D"
+			lcValue = DTOC(lpvValue)
+		OTHERWISE
+			* Error message.
+
+	ENDCASE
+
+	*--- Seek for the key in the registry table.
+	lcCurWork = ALIAS()
+	SELECT REGISTRY
+	
+	**
+	** SQL Select registry key
+	**
+	SELECT * ;
+		FROM REGISTRY ;
+		WHERE ((REGISTRY.STATION_ID == THIS.cStation_id) AND (REGISTRY.KEY == lpcKey)) ;
+		INTO ARRAY laValue
+		
+	IF TYPE( "laValue" ) == "U"
+
+		INSERT INTO REGISTRY (STATION_ID, KEY, VALUE, TYPE) ;
+			VALUES (THIS.cStation_id, lpcKey, lcValue, lcType)
+
+	ELSE
+	
+		UPDATE REGISTRY ;
+			SET REGISTRY.STATION_ID = THIS.cStation_id,;
+				REGISTRY.KEY = lpcKey,;
+				REGISTRY.VALUE = lcValue,;
+				REGISTRY.TYPE = lcType ;
+			WHERE ((REGISTRY.STATION_ID == THIS.cStation_id) AND (REGISTRY.KEY == lpcKey))
+
+		RELEASE laValue
+			
+	ENDIF
+
+
+	IF NOT EMPTY(lcCurWork)
+		SELECT (lcCurWork)
+	ENDIF
+	RETURN
+
+
+ENDPROC
+PROCEDURE open
+
+
+	*--- Open the registry table
+	IF USED("REGISTRY")
+		USE IN REGISTRY
+	ENDIF
+	
+	USE (ALLTRIM(this.cDataPath) + "\REGISTRY.DBF") ALIAS REGISTRY ORDER KEY IN 0 SHARED
+
+
+ENDPROC
+PROCEDURE close
+
+	*--- Close the registry table
+	IF USED("REGISTRY")
+		USE IN REGISTRY
+	ENDIF
+ENDPROC
+PROCEDURE Init
+
+	*--- Retrieve application parameters
+	LOCAL lcBuffer, lcName
+
+	lcBuffer = SPACE(150)										&& Must initialize fixed buffer space
+	lcName = SPACE(150)
+
+
+	IF GetPrivStr("Defaults", "Station_id", "", @lcBuffer, LEN(lcBuffer)-1, CURDIR() + THIS.APP_INIFILE) > 0
+		THISFORM.cStation_id = LEFT(ALLTRIM(lcBuffer),LEN(ALLTRIM(lcBuffer))-1)	&& Set the application id
+		THISFORM.txtStation_id.value = THISFORM.cStation_id
+	ENDIF
+	IF GetPrivStr("Defaults", "DataPath", "", @lcBuffer, LEN(lcBuffer)-1, CURDIR() + THIS.APP_INIFILE) > 0
+		THISFORM.cDataPath = LEFT(ALLTRIM(lcBuffer),LEN(ALLTRIM(lcBuffer))-1)	&& Set the path to the registry files
+		THISFORM.txtDataPath.value = THISFORM.cDataPath
+	ENDIF
+
+	lcName = THISFORM.cDataPath + "\registry.dbf"
+	
+	IF ( NOT FILE( lcName ) ) OR EMPTY( THISFORM.cStation_id )
+	
+		WAIT "Please set station id and data path." WINDOW
+		THISFORM.Show
+		
+	ENDIF
+
+
+ENDPROC
+[END METHODS]
+[START RESERVED1]
+Class[END RESERVED1]
+[START RESERVED2]
+6[END RESERVED2]
+[START RESERVED3]
+cstation_id The station id (station name).
+capp_id Application id.
+cdatapath Path to registry table.
+app_inifile Name of application INI file
+*getvalue 
+*putvalue 
+*open Open the registry table.
+*close Close the registry table.
+[END RESERVED3]
+[START RESERVED6]
+Pixels[END RESERVED6]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RVJ0KLV2F
+[CLASS] commandgroup
+[BASECLASS] commandgroup
+[OBJNAME] cmgDataDictionary
+[PARENT] vc_registry
+[START PROPERTIES]
+ButtonCount = 2
+BackStyle = 0
+BorderStyle = 0
+Value = 1
+Height = 62
+Left = -2
+Top = 106
+Width = 182
+TabIndex = 2
+Name = "cmgDataDictionary"
+Command1.Top = 6
+Command1.Left = 5
+Command1.Height = 52
+Command1.Width = 84
+Command1.Picture = ..\graphics\rsc_formexit.ico
+Command1.Cancel = .T.
+Command1.Caption = "[Esc] E\<xit"
+Command1.TabIndex = 1
+Command1.Name = "cmdCancel"
+Command2.Top = 6
+Command2.Left = 95
+Command2.Height = 52
+Command2.Width = 84
+Command2.Picture = ..\graphics\file10.ico
+Command2.Caption = "\<Locate"
+Command2.TabIndex = 3
+Command2.Name = "cmdLocate"
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE cmdCancel.Click
+
+	*--- Exit this form.
+
+	*--- Exit the registry form
+	=WritePrivStr("Defaults", "Station_id", THISFORM.txtStation_id.text, CURDIR() + THISFORM.APP_INIFILE)
+	=WritePrivStr("Defaults", "DataPath", THISFORM.txtDataPath.text, CURDIR() + THISFORM.APP_INIFILE)
+
+	THISFORM.cStation_id = ALLTRIM(THISFORM.txtStation_id.text)
+	THISFORM.cDataPath   = ALLTRIM(THISFORM.txtDataPath.text)
+
+	THISFORM.Hide
+
+ENDPROC
+PROCEDURE cmdLocate.Click
+
+
+	*--- GENERATE DATA DICTIONARY
+	LOCAL lcTableFile, lcFieldFile, lcIndexFile, lcTmpFile, lcOrg
+	
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RYT0QBUAC
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] lblStation_id
+[PARENT] vc_registry
+[START PROPERTIES]
+FontBold = .T.
+FontSize = 12
+BackStyle = 0
+Caption = "Station id"
+Height = 22
+Left = 5
+Top = 9
+Width = 80
+Name = "lblStation_id"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RYT0QBUAD
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] txtStation_id
+[PARENT] vc_registry
+[START PROPERTIES]
+FontSize = 12
+Height = 27
+InputMask = "XXXXXXXXXX"
+Left = 86
+MaxLength = 10
+Top = 6
+Width = 94
+Name = "txtStation_id"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RYT0QBUAM
+[CLASS] label
+[BASECLASS] label
+[OBJNAME] lblDataPath
+[PARENT] vc_registry
+[START PROPERTIES]
+FontBold = .T.
+FontSize = 12
+BackStyle = 0
+Caption = "Data Path"
+Height = 21
+Left = 5
+Top = 35
+Width = 79
+Name = "lblDataPath"
+[END PROPERTIES]
+
+[ RECORD]
+[PLATFORM] WINDOWS 
+[UNIQUEID] _RYT0QBUAN
+[CLASS] textbox
+[BASECLASS] textbox
+[OBJNAME] txtDataPath
+[PARENT] vc_registry
+[START PROPERTIES]
+FontSize = 12
+Height = 27
+InputMask = ""
+Left = 86
+MaxLength = 149
+Top = 34
+Width = 596
+Name = "txtDataPath"
+[END PROPERTIES]
+[START METHODS]
+PROCEDURE Valid
+
+	*--- Validate the data path
+	IF ( NOT FILE( ALLTRIM(THISFORM.txtDataPath.text) + "\REGISTRY.DBF" ) )
+		WAIT "Please enter a valid data path." WINDOW
+		RETURN .F.
+	ENDIF
+
+ENDPROC
+[END METHODS]
+
+[ RECORD]
+[PLATFORM] COMMENT 
+[UNIQUEID] RESERVED  
+[OBJNAME] vc_registry
+[START PROPERTIES]
+Arial, 0, 9, 5, 15, 12, 16, 3, 0
+Arial, 0, 12, 7, 19, 15, 21, 3, 1
+[END PROPERTIES]
+[EOF]

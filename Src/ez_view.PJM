@@ -1,0 +1,33 @@
+Version=  1.20
+Author=
+Company=
+Address=
+City=
+State=
+Zip=
+Country=
+SaveCode=.T.
+Debug=.T.
+Encrypt=.F.
+NoLogo=.F.
+CommentStyle=1
+Comments=
+CompanyName=
+FileDescription=
+LegalCopyright=
+LegalTrademarks=
+ProductName=
+Major=
+Minor=
+Revision=
+AutoIncrement=.F.
+[OLEServers]
+[OLEServersEnd]
+[ProjectFiles]
+ 690461262,V,libs\ez_main.vcx,.F.,.F.,1252,,,
+ 690461269,P,programs\ez_view.prg,.F.,.T.,1252,,,
+ 690461292,M,menus\ez_view.mnx,.F.,.F.,1252,,,
+ 690461299,T,include\strings.h,.F.,.F.,1252,,,
+ 690461304,T,include\ez_view.h,.F.,.F.,1252,,,
+ 690461312,T,include\foxpro.h,.F.,.F.,1252,,,
+[EOF]

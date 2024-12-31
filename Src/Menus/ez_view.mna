@@ -1,0 +1,347 @@
+SCCTEXT Version 4.0.0.2
+OBJTYPE N(2,0),OBJCODE N(2,0),NAME M(4,0),PROMPT M(4,0),COMMAND M(4,0),MESSAGE M(4,0),PROCTYPE N(1,0),PROCEDURE M(4,0),SETUPTYPE N(1,0),SETUP M(4,0),CLEANTYPE N(1,0),CLEANUP M(4,0),MARK C(1,0),KEYNAME M(4,0),KEYLABEL M(4,0),SKIPFOR M(4,0),NAMECHANGE L(1,0),NUMITEMS N(2,0),LEVELNAME C(10,0),ITEMNUM C(3,0),COMMENT M(4,0),LOCATION N(2,0),SCHEME N(2,0)
+1252
+[OBJTYPE] 1
+[OBJCODE] 22
+[PROCTYPE] 1
+[SETUPTYPE] 1
+[CLEANTYPE] 1
+[BINSTART MARK]
+CHECKSUM=57840
+[BINEND MARK]
+[ITEMNUM]   0
+[OBJTYPE] 2
+[OBJCODE] 1
+[NAME] _MSYSMENU
+[PROCTYPE] 1
+[BINSTART MARK]
+CHECKSUM=57840
+[BINEND MARK]
+[NUMITEMS] 3
+[LEVELNAME] _MSYSMENU 
+[ITEMNUM]   0
+[SCHEME] 3
+[OBJTYPE] 3
+[OBJCODE] 77
+[PROMPT] \<File
+[BINSTART MARK]
+CHECKSUM=57840
+[BINEND MARK]
+[KEYNAME] ALT+F
+[KEYLABEL] ALT+F
+[LEVELNAME] _MSYSMENU 
+[ITEMNUM]   1
+[OBJTYPE] 2
+[NAME] File
+[PROCTYPE] 1
+[BINSTART MARK]
+CHECKSUM=57840
+[BINEND MARK]
+[NUMITEMS] 6
+[LEVELNAME] File      
+[ITEMNUM]   0
+[SCHEME] 4
+[OBJTYPE] 3
+[OBJCODE] 80
+[PROMPT] \<Login
+[PROCTYPE] 1
+[START PROCEDURE]
+*-----------------------------------------------------------------------------*
+*                                                                             *
+*  System: RSC EZ-LAB                                                         *
+*                                                                             *
+*  Object: EZMENU.MPR           - Application main menu.                      *
+*                                                                             *
+*  Method: File\Login Menu Method - Provide user login capability.            *
+*                                                                             *
+*  Notes.: This routine provides a way to log out and onto the application.   *
+*          The current item must be saved on logon/logout.                    *
+*                                                                             *
+*  Update:                                                                    *
+*          18JUN98 RDR Designed & Programmed.                                 *
+*                                                                             *
+* (c) 1997-1998 Redmer Software Company.  All Rights Reserved.                *
+*-----------------------------------------------------------------------------*
+
+	goSecurity.Show(1)							&& SHOW THE SECURITY SCREEN
+[END PROCEDURE]
+[BINSTART MARK]
+CHECKSUM=57840
+[BINEND MARK]
+[KEYNAME] CTRL+L
+[KEYLABEL] CTRL+L
+[LEVELNAME] File      
+[ITEMNUM]   1
+[OBJTYPE] 3
+[OBJCODE] 80
+[PROMPT] \-
+[PROCTYPE] 1
+[BINSTART MARK]
+CHECKSUM=57840
+[BINEND MARK]
+[LEVELNAME] File      
+[ITEMNUM]   2
+[OBJTYPE] 3
+[OBJCODE] 80
+[PROMPT] \<Reports & Labels
+[PROCTYPE] 1
+[START PROCEDURE]
+
+	*--- LOAD REPORT CONSOLE
+	PUBLIC loREPORT
+	loREPORT = CREATEOBJECT( "vc_report_selection" )
+	loREPORT.Show
+	
+	
+	*** RELEASE loREPORT
+[END PROCEDURE]
+[BINSTART MARK]
+CHECKSUM=57840
+[BINEND MARK]
+[LEVELNAME] File      
+[ITEMNUM]   3
+[OBJTYPE] 3
+[OBJCODE] 78
+[NAME] _MFI_PGSET
+[PROMPT] Page \<Setup
+[BINSTART MARK]
+CHECKSUM=57840
+[BINEND MARK]
+[LEVELNAME] File      
+[ITEMNUM]   4
+[OBJTYPE] 3
+[OBJCODE] 77
+[PROMPT] \-
+[BINSTART MARK]
+CHECKSUM=57840
+[BINEND MARK]
+[LEVELNAME] File      
+[ITEMNUM]   5
+[OBJTYPE] 2
+[NAME] _ryy19ssak
+[PROCTYPE] 1
+[BINSTART MARK]
+CHECKSUM=57840
+[BINEND MARK]
+[LEVELNAME] _ryy19ssak
+[ITEMNUM]   0
+[SCHEME] 4
+[OBJTYPE] 3
+[OBJCODE] 80
+[PROMPT] E\<xit
+[PROCTYPE] 1
+[START PROCEDURE]
+*-----------------------------------------------------------------------------*
+*                                                                             *
+*  System: RSC EZ-LAB                                                         *
+*                                                                             *
+*  Object: EZMENU.MPR           - Application main menu.                      *
+*                                                                             *
+*  Method: File\Exit Menu Method - Exit the opprogram - with item save.       *
+*                                                                             *
+*  Notes.: This routine simply calls the save method on the order form prior  *
+*          to exiting the program.
+*                                                                             *
+*  Update:                                                                    *
+*          18JUN98 RDR Designed & Programmed.                                 *
+*                                                                             *
+* (c) 1997-1998 Redmer Software Company.  All Rights Reserved.                *
+*-----------------------------------------------------------------------------*
+
+
+	*--- Exit the program
+	LOCAL lnAns
+	PUSH KEY CLEAR
+	lnAns = MESSAGEBOX( "Are you sure?", 4+32, "Exit" )
+	IF (lnAns == 6)
+	
+		*--- SAVE THE PRODUCTION INFORMATION BACK TO THE NETWORK
+		IF (glDebug)
+			=FCLOSE(gnLogFile)
+		ENDIF
+	
+		CLEAR READ ALL
+		ON ERROR
+		ON KEY
+		SET CLASSLIB TO
+		SET LIBRARY TO
+		RELEASE ALL
+		HIDE WINDOW ALL
+		CLEAR WINDOWS
+		CLEAR RESOURCES
+		SET SYSM TO DEFAULT
+		CLOSE ALL
+		CLEAR EVENTS
+		CLEAR ALL
+		CANCEL
+	ENDIF
+	POP KEY[END PROCEDURE]
+[BINSTART MARK]
+CHECKSUM=57840
+[BINEND MARK]
+[KEYNAME] CTRL+F10
+[KEYLABEL] CTRL+F10
+[LEVELNAME] File      
+[ITEMNUM]   6
+[OBJTYPE] 3
+[OBJCODE] 77
+[PROMPT] \<Edit
+[BINSTART MARK]
+CHECKSUM=57840
+[BINEND MARK]
+[KEYNAME] ALT+E
+[KEYLABEL] ALT+E
+[LEVELNAME] _MSYSMENU 
+[ITEMNUM]   2
+[OBJTYPE] 2
+[NAME] Edit
+[PROCTYPE] 1
+[BINSTART MARK]
+CHECKSUM=57840
+[BINEND MARK]
+[NUMITEMS] 2
+[LEVELNAME] Edit      
+[ITEMNUM]   0
+[SCHEME] 4
+[OBJTYPE] 3
+[OBJCODE] 77
+[PROMPT] Prefere\<nces
+[BINSTART MARK]
+CHECKSUM=57840
+[BINEND MARK]
+[LEVELNAME] Edit      
+[ITEMNUM]   1
+[OBJTYPE] 2
+[NAME] Preference
+[PROCTYPE] 1
+[BINSTART MARK]
+CHECKSUM=57840
+[BINEND MARK]
+[NAMECHANGE] .T.
+[NUMITEMS] 4
+[LEVELNAME] Preference
+[ITEMNUM]   0
+[SCHEME] 4
+[OBJTYPE] 3
+[OBJCODE] 80
+[PROMPT] \<Images
+[PROCTYPE] 1
+[START PROCEDURE]
+
+	goPreferences.Show(2)
+	[END PROCEDURE]
+[BINSTART MARK]
+CHECKSUM=57840
+[BINEND MARK]
+[LEVELNAME] Preference
+[ITEMNUM]   1
+[OBJTYPE] 3
+[OBJCODE] 80
+[PROMPT] \<Station
+[MESSAGE] "Set station name and maintain registry."
+[PROCTYPE] 1
+[START PROCEDURE]
+
+	*--- Show the station configuration (part of the registry)
+	PUSH KEY CLEAR
+
+	goRegistry.Show(1)
+	POP KEY[END PROCEDURE]
+[BINSTART MARK]
+CHECKSUM=57840
+[BINEND MARK]
+[START SKIPFOR]
+(goSecurity.nSecureLevel < 4)[END SKIPFOR]
+[LEVELNAME] Preference
+[ITEMNUM]   2
+[OBJTYPE] 3
+[OBJCODE] 77
+[PROMPT] \-
+[BINSTART MARK]
+CHECKSUM=57840
+[BINEND MARK]
+[LEVELNAME] Preference
+[ITEMNUM]   3
+[OBJTYPE] 2
+[NAME] _rvj145638
+[PROCTYPE] 1
+[BINSTART MARK]
+CHECKSUM=57840
+[BINEND MARK]
+[LEVELNAME] _rvj145638
+[ITEMNUM]   0
+[SCHEME] 4
+[OBJTYPE] 3
+[OBJCODE] 80
+[PROMPT] \<Users
+[MESSAGE] "Setup user id and passwords."
+[PROCTYPE] 1
+[START PROCEDURE]
+
+
+	*--- Edit Users
+	LOCAL goUsers
+	PUSH KEY CLEAR
+	goUsers = CREATEOBJECT( "vc_User_Selection" )
+	goUsers.Show(1)
+	RELEASE goUsers
+	POP KEY[END PROCEDURE]
+[BINSTART MARK]
+CHECKSUM=57840
+[BINEND MARK]
+[START SKIPFOR]
+(goSecurity.nSecureLevel < 4)[END SKIPFOR]
+[LEVELNAME] Preference
+[ITEMNUM]   4
+[OBJTYPE] 3
+[OBJCODE] 80
+[PROMPT] \<Import Student Records
+[PROCTYPE] 1
+[START PROCEDURE]
+
+	*--- Show the station configuration (part of the registry)
+	PUSH KEY CLEAR
+
+	goIMPORT = CREATEOBJECT("vc_student_import")
+	goIMPORT.Show(1)
+
+	POP KEY[END PROCEDURE]
+[BINSTART MARK]
+CHECKSUM=57840
+[BINEND MARK]
+[LEVELNAME] Edit      
+[ITEMNUM]   2
+[OBJTYPE] 3
+[OBJCODE] 77
+[PROMPT] \<Help
+[BINSTART MARK]
+CHECKSUM=57840
+[BINEND MARK]
+[KEYNAME] ALT+H
+[KEYLABEL] ALT+H
+[LEVELNAME] _MSYSMENU 
+[ITEMNUM]   3
+[OBJTYPE] 2
+[NAME] Help
+[PROCTYPE] 1
+[BINSTART MARK]
+CHECKSUM=57840
+[BINEND MARK]
+[NUMITEMS] 1
+[LEVELNAME] Help      
+[ITEMNUM]   0
+[SCHEME] 4
+[OBJTYPE] 3
+[OBJCODE] 80
+[PROMPT] \<About RSC EZ-VIEW
+[PROCTYPE] 1
+[START PROCEDURE]
+
+
+	goSplash.Show(1)			&& Show the splash screen in modal mode.[END PROCEDURE]
+[BINSTART MARK]
+CHECKSUM=57840
+[BINEND MARK]
+[LEVELNAME] Help      
+[ITEMNUM]   1
+[EOF]
