@@ -1,9 +1,15 @@
 <a href="https://developer.microsoft.com">![Microsoft](https://img.shields.io/badge/Microsoft-666666?style=for-the-badge&logo=microsoft&logoColor=white)</a>
-<a href="https://visualstudio.microsoft.com">![Visual Studio](https://img.shields.io/badge/Visual_Studio-5C2D91?style=for-the-badge&logo=visual%20studio&logoColor=white)</a>
+<a href="https://winworldpc.com/product/foxpro/26">![FoxPro v2.6](https://img.shields.io/badge/FoxPro%20v2.6-red?style=for-the-badge)</a>
 
-# EZVIEW Student Information Management System
+# EZ-VIEW Student Information Management System (1998)
 
-Welcome to the Redmer Software Company EZVIEW Student Information Management System. This project is designed to provide a comprehensive solution for managing student information efficiently and effectively.
+Welcome to the Redmer Software Company EZ-VIEW Student Information Management System. The RSC EZ-VIEW Student Image Viewer is a very simple to use yet powerful program for maintaining student information and quickly accessing student photographs stored on your computer. Using EZ-VIEW you can quickly retrieve information such as homeroom, home address, guardian information, emergency contacts, medical conditions, awards, disciplinary actions, and schedule of classes. You can easily add, change, and remove information from the system and share the information across a network so that it is accessible by teachers, librarians, counselors, administrators etc. There are several features that are unique to EZ-VIEW that make it one of the most powerful and popular Student Image Viewer programs available.
+
+- EZ-VIEW is able to use photographs stored in more than 60 different file formats including all of the popular standard formats such Windows Bitmap (known as BMPs), Photoshop(r), Targa(r), Tiff(r), PhotoCD(r), and many others.
+- EZ-VIEW is multi-user. Unlike other student image viewers, EZ-VIEW allows you store your student images anywhere on your computer or on your network and access them from any number of computers simultaneously. This feature simply allows you to install EZ-VIEW virtually anywhere for anyone who needs access to the information.
+- EZ-VIEW uses industry-standard database technology that allows you to easily transfer information to and from other systems. Unlike other proprietary systems that lock your information in their hidden files, EZ-VIEW allow you to store your information anywhere on the network in the industry standard xBASE format. You can directly access these files in programs other than EZ-VIEW such as Microsoft Access(r), Microsoft FoxPro(r), Microsoft Word(r), Microsoft Excel(r), and Inprise dBASE(r) as well as any other program that supports the xBASE standard.
+- EZ-VIEW includes a powerful report writer with built-in templates for student listings, detail reports, id cards, and awards. You can easily print reports using the included templates or you can modify the templates to meet your specific needs. You can also create new reports from scratch using the powerful report layout tool. EZ-VIEW is the only program of its kind to make use of Wizards that guide you through creating new reports step by step.
+- EZ-VIEW is supported like no other student image viewer software, with technical notes, updates, and documentation freely available on GitHub. EZ-VIEWis the only application of its kind available absolutely free with complete source code on the Internet. This means that your local computer support team or network administrator has unlimited flexibility in installing the program and customizing it to meet your precise needs. Additionally, the application is ideal for teaching students programming and imaging techniques at the high school level.
 
 ## Table of Contents
 
